@@ -101,3 +101,14 @@ export const formatMonth = (iso: ISODate) => monthFmt.format(fromISO(iso));
 export const formatWeekdayShort = (iso: ISODate) => weekdayShortFmt.format(fromISO(iso)).replace('.', '');
 
 export const WEEKDAY_LABELS = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
+
+/** „7“ → 07:00, „730“ → 07:30, „0730“/„07:30“ → 07:30; ungültig → null. */
+export function parseTime(text: string): string | null {
+  const digits = text.replace(/\D/g, '');
+  if (!digits) return null;
+  const padded = digits.length <= 2 ? `${digits.padStart(2, '0')}00` : digits.padStart(4, '0').slice(0, 4);
+  const h = Number(padded.slice(0, 2));
+  const m = Number(padded.slice(2));
+  if (h > 23 || m > 59) return null;
+  return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+}

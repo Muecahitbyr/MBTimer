@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { holidaysNRW } from './holidays';
-import { isoWeek } from './date';
+import { isoWeek, parseTime } from './date';
 
 describe('Feiertage NRW', () => {
   it('berechnet bewegliche Feiertage 2026', () => {
@@ -17,5 +17,20 @@ describe('Feiertage NRW', () => {
     expect(isoWeek('2026-10-26')).toBe(44);
     expect(isoWeek('2026-01-01')).toBe(1);
     expect(isoWeek('2027-01-01')).toBe(53);
+  });
+});
+
+describe('Uhrzeit-Eingabe', () => {
+  it.each([
+    ['7', '07:00'],
+    ['730', '07:30'],
+    ['0730', '07:30'],
+    ['07:30', '07:30'],
+    ['1615', '16:15'],
+    ['2400', null],
+    ['0760', null],
+    ['', null],
+  ])('%s → %s', (input, expected) => {
+    expect(parseTime(input)).toBe(expected);
   });
 });
