@@ -1,4 +1,6 @@
+import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
+import { provider } from '../../config/legal';
 import { usePageMeta } from '../../components/usePageMeta';
 import { pageMeta } from '../seo';
 import LegalPage from './LegalPage';
@@ -8,7 +10,20 @@ export default function DatenschutzPage() {
   return (
     <LegalPage title="Datenschutzerklärung">
       <Typography variant="h5" component="h2">1. Verantwortliche Stelle</Typography>
-      <Typography>{'{{PLATZHALTER: Name, Anschrift und Kontaktdaten des Verantwortlichen}}'}</Typography>
+      <Typography>
+        {provider.company}, Inhaber: {provider.owner}
+        {provider.addressLines.map((line) => (
+          <span key={line}>
+            <br />
+            {line}
+          </span>
+        ))}
+        <br />
+        E-Mail:{' '}
+        <Link href={`mailto:${provider.email}`} underline="always">
+          {provider.email}
+        </Link>
+      </Typography>
       <Typography variant="h5" component="h2">2. Hosting</Typography>
       <Typography>{'{{PLATZHALTER: Hosting-Anbieter, Serverstandort, Server-Logfiles, Rechtsgrundlage}}'}</Typography>
       <Typography variant="h5" component="h2">3. Cookies und Tracking</Typography>

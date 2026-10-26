@@ -4,11 +4,13 @@
  * solche Stellen sind mit {{TODO}} markiert.
  */
 
+import { provider } from './legal';
+
 export const siteConfig = {
   productName: 'MBzeit',
   /** Empfänger für Kontaktformular und Anfragen (mailto). */
-  contactEmail: 'kontakt@example.com', // {{TODO: echte Kontaktadresse eintragen}}
-  companyName: '{{FIRMENNAME}}',
+  contactEmail: 'info@bayar-solutions.de',
+  companyName: provider.company,
 };
 
 export const nav = [

@@ -96,14 +96,13 @@ Seitentitel und Meta-Beschreibungen in [`src/site/seo.ts`](src/site/seo.ts).
 
 **Vor einer Veröffentlichung zu ersetzen:**
 
+- Erledigt: Kontakt-E-Mail `info@bayar-solutions.de` (`src/config/site.ts`), Impressum und Anbieterangaben
+  von bayar-solutions.de (`src/config/legal.ts`, Fußzeile „© BAYAR-SOLUTIONS“).
 - `src/config/site.ts`
-  - `contactEmail`: aktuell `kontakt@example.com`
-  - `companyName`: `{{FIRMENNAME}}`, erscheint in der Fußzeile
   - FAQ „Datenschutz“: Hosting-Standort, AVV, technische Maßnahmen
   - FAQ „Support“: Kanäle, Erreichbarkeit
   - FAQ „Kündigung“: Kündigungsfrist aus den AGB
-- `src/site/pages/ImpressumPage.tsx`: alle `{{…}}`-Angaben
-- `src/site/pages/DatenschutzPage.tsx`: alle `{{PLATZHALTER}}`/`{{TODO}}`-Angaben (rechtlich prüfen lassen)
+- `src/site/pages/DatenschutzPage.tsx`: Abschnitte 2–7 mit `{{PLATZHALTER}}`/`{{TODO}}` (rechtlich prüfen lassen)
 - Bewusst **nicht** enthalten, weil unbelegt: Serverstandort, Zertifikate, Kundenzahlen, Kundenstimmen, Logos.
   Wo solche Angaben hingehören, steht im Text ein `{{TODO}}`.
 
