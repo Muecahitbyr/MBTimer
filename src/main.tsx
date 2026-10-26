@@ -24,6 +24,8 @@ if (prerendered && prerendered === normalizePath(window.location.pathname)) {
   hydrateRoot(container, app);
   replayEarlyClick();
 } else {
+  // Kein Nachholen nötig (Inhalt war bis hierher unsichtbar) – Klick-Merker sofort abschalten.
+  (window as Window & { __mbtReady?: boolean }).__mbtReady = true;
   container.textContent = '';
   createRoot(container).render(app);
   document.documentElement.removeAttribute('data-spa');
