@@ -113,7 +113,7 @@ function CorrectionForm({ onClose, employeeId, defaultDate }: Props) {
       <DialogTitle id="korrektur-titel">Zeitkorrektur beantragen</DialogTitle>
       <DialogContent>
         <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: 'auto 1fr' }, gap: 3, pt: 1, alignItems: 'start' }}>
-          <Box sx={{ border: 1, borderColor: 'divider', borderRadius: 3, p: { xs: 1, sm: 2 }, overflowX: 'auto' }}>
+          <Box sx={{ border: 1, borderColor: 'divider', borderRadius: 3, py: 1, px: { xs: 0, sm: 1 }, display: 'grid', justifyItems: 'center', gap: 1 }}>
             <DateCalendar
               mode="single"
               label="Tag für die Korrektur wählen"

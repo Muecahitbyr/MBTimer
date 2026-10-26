@@ -1,24 +1,16 @@
-import { useEffect, useId, useRef, useState, type KeyboardEvent } from 'react';
+import { useState } from 'react';
+import dayjs, { type Dayjs } from 'dayjs';
+import 'dayjs/locale/de';
+import Badge from '@mui/material/Badge';
 import Box from '@mui/material/Box';
-import ButtonBase from '@mui/material/ButtonBase';
-import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import Typography from '@mui/material/Typography';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { useTheme } from '@mui/material/styles';
-import ChevronLeft from '@mui/icons-material/ChevronLeft';
-import ChevronRight from '@mui/icons-material/ChevronRight';
-import {
-  addDays,
-  addMonths,
-  formatMonth,
-  fromISO,
-  isoWeek,
-  startOfMonth,
-  startOfWeek,
-  WEEKDAY_LABELS,
-  type ISODate,
-} from '../../lib/date';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DateCalendar as MuiDateCalendar } from '@mui/x-date-pickers/DateCalendar';
+import { PickerDay, type PickerDayProps } from '@mui/x-date-pickers/PickerDay';
+import { deDE } from '@mui/x-date-pickers/locales';
+import type { ISODate } from '../../lib/date';
+import { HOLIDAY_COLOR } from '../../lib/absenceStyle';
 
 /** Zusatzinfos pro Tag (Feiertag, frei, Markierung …). */
 export interface DayMeta {
@@ -26,7 +18,7 @@ export interface DayMeta {
   /** Kein Arbeitstag (Wochenende / laut Arbeitszeitplan frei) – gedämpft dargestellt. */
   muted?: boolean;
   disabled?: boolean;
-  /** Kleiner Punkt unter der Zahl, z. B. bestehender Urlaub oder fehlende Buchung. */
+  /** Punkt am Tag, z. B. bestehender Urlaub oder fehlende Buchung. */
   dot?: { color: string; label: string };
 }
 
@@ -43,257 +35,164 @@ interface DateCalendarProps {
   min?: ISODate;
   max?: ISODate;
   getMeta?: (date: ISODate) => DayMeta;
-  /** Anzahl Monate nebeneinander ab sm (auf dem Handy immer 1). */
-  months?: 1 | 2;
   label: string;
 }
 
-const longDate = new Intl.DateTimeFormat('de-DE', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-const CELL = 40;
+const iso = (d: Dayjs) => d.format('YYYY-MM-DD');
+const localeText = {
+  ...deDE.components.MuiLocalizationProvider.defaultProps.localeText,
+  calendarWeekNumberHeaderText: 'KW',
+  calendarWeekNumberHeaderLabel: 'Kalenderwoche',
+  calendarWeekNumberAriaLabelText: (week: number) => `Kalenderwoche ${week}`,
+};
 
-function lastOfMonth(month: ISODate): ISODate {
-  return addDays(addMonths(month, 1), -1);
+interface DayExtraProps {
+  rangeLo: ISODate | null;
+  rangeHi: ISODate | null;
+  preview: boolean;
+  getMeta: (date: ISODate) => DayMeta;
+  onHoverDay: (date: ISODate) => void;
 }
 
-function weeksOfMonth(month: ISODate): ISODate[][] {
-  const weeks: ISODate[][] = [];
-  const last = lastOfMonth(month);
-  for (let d = startOfWeek(startOfMonth(month)); d <= last; d = addDays(d, 7)) {
-    weeks.push(Array.from({ length: 7 }, (_, i) => addDays(d, i)));
-  }
-  return weeks;
-}
+/** Tag mit Zeitraum-Band, gedämpften freien Tagen und Punkt-Markierung (Badge). */
+function CalendarDay(props: PickerDayProps & DayExtraProps) {
+  const { rangeLo, rangeHi, preview, getMeta, onHoverDay, day, outsideCurrentMonth, ...other } = props;
+  const date = iso(day as Dayjs);
+  const meta = outsideCurrentMonth ? {} : getMeta(date);
+  const inRange = !!(rangeLo && rangeHi && date >= rangeLo && date <= rangeHi) && !outsideCurrentMonth;
+  const isStart = inRange && date === rangeLo;
+  const isEnd = inRange && date === rangeHi;
+  const endpoint = isStart || isEnd;
+  const band = inRange && rangeLo !== rangeHi;
+  const dotColor = meta.dot?.color ?? (meta.holiday ? HOLIDAY_COLOR : undefined);
+  const tooltip = [meta.holiday, meta.dot?.label].filter(Boolean).join(' · ');
 
-/** Gleicher Tag im Nachbarmonat, begrenzt auf dessen letzten Tag (31.01. → 28.02.). */
-function shiftMonth(date: ISODate, months: number): ISODate {
-  const target = addMonths(date, months);
-  const last = lastOfMonth(target);
-  const day = Math.min(Number(date.slice(8)), Number(last.slice(8)));
-  return `${target.slice(0, 8)}${String(day).padStart(2, '0')}`;
+  const pickerDay = (
+    <PickerDay
+      {...other}
+      day={day}
+      outsideCurrentMonth={outsideCurrentMonth}
+      selected={endpoint}
+      onMouseEnter={(_, d) => onHoverDay(iso(d as Dayjs))}
+      aria-label={[
+        (day as Dayjs).locale('de').format('dddd, D. MMMM YYYY'),
+        meta.holiday && `Feiertag: ${meta.holiday}`,
+        meta.dot?.label,
+        meta.muted && 'kein Arbeitstag',
+      ]
+        .filter(Boolean)
+        .join(', ')}
+      sx={{
+        ...(meta.muted && !endpoint && { color: 'text.secondary' }),
+        ...(band && {
+          borderRadius: 0,
+          mx: 0,
+          width: 40,
+          bgcolor: preview ? 'action.hover' : 'action.selected',
+          '&:hover, &:focus': { bgcolor: preview ? 'action.selected' : 'action.focus' },
+          ...(isStart && { borderTopLeftRadius: '50%', borderBottomLeftRadius: '50%' }),
+          ...(isEnd && { borderTopRightRadius: '50%', borderBottomRightRadius: '50%' }),
+        }),
+        ...(endpoint && {
+          bgcolor: preview && isEnd && !isStart ? 'primary.light' : 'primary.main',
+          color: 'primary.contrastText',
+          '&:hover, &:focus': { bgcolor: 'primary.dark' },
+        }),
+      }}
+    />
+  );
+
+  const withDot = dotColor ? (
+    <Badge
+      key={date}
+      overlap="circular"
+      variant="dot"
+      sx={{ '& .MuiBadge-badge': { bgcolor: dotColor, width: 8, height: 8, minWidth: 8, border: 1.5, borderColor: 'background.paper', top: 6, right: 6 } }}
+    >
+      {pickerDay}
+    </Badge>
+  ) : (
+    pickerDay
+  );
+
+  return tooltip ? (
+    <Tooltip title={tooltip} disableInteractive enterDelay={250}>
+      <span>{withDot}</span>
+    </Tooltip>
+  ) : (
+    withDot
+  );
 }
 
 /**
- * Kalender zur Auswahl eines Datums oder Zeitraums – deutsch, Woche ab Montag, mit Kalenderwochen,
- * Feiertagen und Markierungen. Tastatur: Pfeiltasten, Bild↑/↓ (Monat), Pos1/Ende (Woche), Enter/Leertaste.
+ * Kalender auf Basis des MUI X DateCalendar (deutsch, Woche ab Montag, Kalenderwochen).
+ * Zeitraum-Auswahl: erster Klick = Start, zweiter Klick = Ende (Band dazwischen, Vorschau beim Überfahren).
  */
-export default function DateCalendar({ mode, value, onChange, today, min, max, getMeta, months = 1, label }: DateCalendarProps) {
-  const theme = useTheme();
-  const wide = useMediaQuery(theme.breakpoints.up('sm'));
-  const visibleMonths = wide ? months : 1;
-  const [month, setMonth] = useState(() => startOfMonth(value.from ?? today));
-  const [focused, setFocused] = useState<ISODate>(value.from ?? today);
+export default function DateCalendar({ mode, value, onChange, today, min, max, getMeta, label }: DateCalendarProps) {
   const [hover, setHover] = useState<ISODate | null>(null);
-  const keyboardNav = useRef(false);
-  const gridRef = useRef<HTMLDivElement>(null);
-  const baseId = useId();
+  const [focusDate, setFocusDate] = useState<ISODate>(value.from ?? today);
+  const meta = (d: ISODate) => getMeta?.(d) ?? {};
 
-  const lastVisible = addMonths(month, visibleMonths - 1);
-  const canPrev = !min || addMonths(month, -1) >= startOfMonth(min);
-  const canNext = !max || addMonths(month, 1) <= startOfMonth(max);
-
-  const meta = (d: ISODate): DayMeta => {
-    const m = getMeta?.(d) ?? {};
-    const outOfBounds = (min && d < min) || (max && d > max);
-    return outOfBounds ? { ...m, disabled: true } : m;
-  };
-
-  // Nach Tastatur-Navigation den neuen Tag fokussieren (Monat ggf. mitwandern lassen).
-  useEffect(() => {
-    if (!keyboardNav.current) return;
-    keyboardNav.current = false;
-    gridRef.current?.querySelector<HTMLButtonElement>(`[data-date="${focused}"]`)?.focus();
-  }, [focused, month]);
-
-  const moveFocus = (d: ISODate) => {
-    if ((min && d < min) || (max && d > max)) return;
-    keyboardNav.current = true;
-    setFocused(d);
-    if (d < month) setMonth(startOfMonth(d));
-    else if (d.slice(0, 7) > lastVisible.slice(0, 7)) setMonth(addMonths(startOfMonth(d), -(visibleMonths - 1)));
-  };
+  const rangeEnd = value.to ?? (mode === 'range' && value.from && hover ? hover : null);
+  const swapped = !!(value.from && rangeEnd && rangeEnd < value.from);
+  const rangeLo = swapped ? rangeEnd : value.from;
+  const rangeHi = swapped ? value.from : (rangeEnd ?? value.from);
 
   const select = (d: ISODate) => {
-    if (meta(d).disabled) return;
-    setFocused(d);
+    setFocusDate(d);
     if (mode === 'single') return onChange({ from: d, to: d });
     if (!value.from || value.to) return onChange({ from: d, to: null });
     if (d < value.from) return onChange({ from: d, to: value.from });
     onChange({ from: value.from, to: d });
   };
 
-  const onKeyDown = (e: KeyboardEvent) => {
-    const steps: Record<string, () => ISODate> = {
-      ArrowLeft: () => addDays(focused, -1),
-      ArrowRight: () => addDays(focused, 1),
-      ArrowUp: () => addDays(focused, -7),
-      ArrowDown: () => addDays(focused, 7),
-      Home: () => startOfWeek(focused),
-      End: () => addDays(startOfWeek(focused), 6),
-      PageUp: () => shiftMonth(focused, -1),
-      PageDown: () => shiftMonth(focused, 1),
-    };
-    if (steps[e.key]) {
-      e.preventDefault();
-      moveFocus(steps[e.key]());
-    } else if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      select(focused);
-    }
+  const dayProps: DayExtraProps = {
+    rangeLo,
+    rangeHi,
+    preview: !value.to && !!hover,
+    getMeta: meta,
+    onHoverDay: setHover,
   };
 
-  // Anzeige-Bereich (inkl. Vorschau beim Überfahren, solange nur der Start gewählt ist).
-  const rangeEnd = value.to ?? (mode === 'range' && value.from && hover ? hover : null);
-  const lo = value.from && rangeEnd && rangeEnd < value.from ? rangeEnd : value.from;
-  const hi = value.from && rangeEnd && rangeEnd < value.from ? value.from : rangeEnd ?? value.from;
-  const preview = !value.to && !!hover;
-
   return (
-    <Box ref={gridRef} onKeyDown={onKeyDown} onMouseLeave={() => setHover(null)}>
-      <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-        <IconButton size="small" onClick={() => setMonth(addMonths(month, -1))} disabled={!canPrev} aria-label="Vorheriger Monat">
-          <ChevronLeft />
-        </IconButton>
-        <Box sx={{ flex: 1, display: 'grid', gridTemplateColumns: `repeat(${visibleMonths}, 1fr)`, textAlign: 'center' }}>
-          {Array.from({ length: visibleMonths }, (_, i) => (
-            <Typography key={i} id={`${baseId}-m${i}`} sx={{ fontWeight: 700 }} aria-live={i === 0 ? 'polite' : undefined}>
-              {formatMonth(addMonths(month, i))}
-            </Typography>
-          ))}
-        </Box>
-        <IconButton size="small" onClick={() => setMonth(addMonths(month, 1))} disabled={!canNext} aria-label="Nächster Monat">
-          <ChevronRight />
-        </IconButton>
+    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="de" localeText={localeText}>
+      <Box onMouseLeave={() => setHover(null)} aria-label={label} role="group">
+        <MuiDateCalendar
+          value={dayjs(focusDate)}
+          referenceDate={dayjs(value.from ?? today)}
+          onChange={(d: Dayjs | null) => d && select(iso(d))}
+          minDate={min ? dayjs(min) : undefined}
+          maxDate={max ? dayjs(max) : undefined}
+          shouldDisableDate={(d: Dayjs) => !!meta(iso(d)).disabled}
+          displayWeekNumber
+          dayOfWeekFormatter={(d: Dayjs) => d.locale('de').format('dd')}
+          views={['day']}
+          slots={{ day: CalendarDay as never }}
+          slotProps={{ day: dayProps as never }}
+          sx={{
+            width: 'auto',
+            maxWidth: 360,
+            m: 0,
+            '& .MuiPickersCalendarHeader-root': { pl: 2, pr: 1 },
+            '& .MuiPickersCalendarHeader-label': { fontWeight: 700, textTransform: 'capitalize' },
+            '& .MuiDayCalendar-weekDayLabel': { fontWeight: 700, color: 'text.primary' },
+            '& .MuiDayCalendar-weekNumberLabel, & .MuiDayCalendar-weekNumber': { color: 'text.secondary', fontSize: 11 },
+          }}
+        />
       </Box>
-
-      <Box sx={{ display: 'flex', gap: 3, justifyContent: 'center' }}>
-        {Array.from({ length: visibleMonths }, (_, mi) => {
-          const m = addMonths(month, mi);
-          return (
-            <Box key={m} role="grid" aria-label={`${label}, ${formatMonth(m)}`} sx={{ userSelect: 'none' }}>
-              <Box role="row" sx={{ display: 'grid', gridTemplateColumns: `28px repeat(7, ${CELL}px)`, mb: 0.5 }}>
-                <Box role="columnheader" sx={{ fontSize: 11, color: 'text.secondary', textAlign: 'center', alignSelf: 'center' }} aria-label="Kalenderwoche">
-                  KW
-                </Box>
-                {WEEKDAY_LABELS.map((w, i) => (
-                  <Box role="columnheader" key={w} sx={{ fontSize: 12, fontWeight: 700, textAlign: 'center', color: i > 4 ? 'text.secondary' : 'text.primary', py: 0.5 }}>
-                    {w}
-                  </Box>
-                ))}
-              </Box>
-              {weeksOfMonth(m).map((week) => (
-                <Box role="row" key={week[0]} sx={{ display: 'grid', gridTemplateColumns: `28px repeat(7, ${CELL}px)` }}>
-                  <Box role="rowheader" sx={{ fontSize: 11, color: 'text.secondary', display: 'grid', placeItems: 'center' }}>
-                    {isoWeek(week[0])}
-                  </Box>
-                  {week.map((d) => {
-                    if (d.slice(0, 7) !== m.slice(0, 7)) return <Box role="gridcell" key={d} />;
-                    const info = meta(d);
-                    const inRange = !!(lo && hi && d >= lo && d <= hi);
-                    const isStart = d === lo;
-                    const isEnd = d === hi;
-                    const endpoint = (isStart || isEnd) && !!lo;
-                    const isToday = d === today;
-                    const tooltip = [info.holiday, info.dot?.label, info.disabled ? 'nicht wählbar' : undefined].filter(Boolean).join(' · ');
-                    const aria = [longDate.format(fromISO(d)), isToday && 'heute', info.holiday && `Feiertag: ${info.holiday}`, info.dot?.label, info.muted && 'kein Arbeitstag']
-                      .filter(Boolean)
-                      .join(', ');
-                    const button = (
-                      <ButtonBase
-                        data-date={d}
-                        tabIndex={d === focused ? 0 : -1}
-                        disabled={info.disabled}
-                        onClick={() => select(d)}
-                        onMouseEnter={() => setHover(d)}
-                        onFocus={() => setFocused(d)}
-                        aria-label={aria}
-                        aria-current={isToday ? 'date' : undefined}
-                        sx={{
-                          width: 36,
-                          height: 36,
-                          borderRadius: '50%',
-                          position: 'relative',
-                          zIndex: 1,
-                          fontSize: 14,
-                          fontWeight: endpoint || isToday ? 700 : 500,
-                          color: endpoint ? 'primary.contrastText' : info.muted ? 'text.secondary' : 'text.primary',
-                          bgcolor: endpoint ? (preview && isEnd && !isStart ? 'primary.light' : 'primary.main') : 'transparent',
-                          border: isToday && !endpoint ? 2 : 0,
-                          borderColor: 'primary.main',
-                          opacity: info.disabled ? 0.35 : 1,
-                          transition: 'background-color 0.1s',
-                          '&:hover': { bgcolor: endpoint ? 'primary.dark' : 'action.hover' },
-                          '&.Mui-focusVisible': { outline: '2px solid', outlineColor: 'primary.main', outlineOffset: 2 },
-                        }}
-                      >
-                        {Number(d.slice(8))}
-                        {(info.holiday || info.dot) && (
-                          <Box
-                            component="span"
-                            aria-hidden="true"
-                            sx={{
-                              position: 'absolute',
-                              bottom: 3,
-                              left: '50%',
-                              transform: 'translateX(-50%)',
-                              width: 5,
-                              height: 5,
-                              borderRadius: '50%',
-                              bgcolor: endpoint ? 'primary.contrastText' : (info.dot?.color ?? '#B7791F'),
-                            }}
-                          />
-                        )}
-                      </ButtonBase>
-                    );
-                    return (
-                      <Box
-                        role="gridcell"
-                        key={d}
-                        aria-selected={inRange}
-                        sx={{ height: CELL, display: 'grid', placeItems: 'center', position: 'relative' }}
-                      >
-                        {inRange && lo !== hi && (
-                          // Band zwischen Start und Ende; an den Enden nur zur Hälfte.
-                          <Box
-                            aria-hidden="true"
-                            sx={{
-                              position: 'absolute',
-                              top: 2,
-                              bottom: 2,
-                              left: isStart ? '50%' : 0,
-                              right: isEnd ? '50%' : 0,
-                              bgcolor: preview ? 'action.hover' : 'action.selected',
-                            }}
-                          />
-                        )}
-                        {tooltip ? (
-                          <Tooltip title={tooltip} disableInteractive enterDelay={300}>
-                            <span>{button}</span>
-                          </Tooltip>
-                        ) : (
-                          button
-                        )}
-                      </Box>
-                    );
-                  })}
-                </Box>
-              ))}
-            </Box>
-          );
-        })}
-      </Box>
-    </Box>
+    </LocalizationProvider>
   );
 }
 
 export function CalendarLegend({ items }: { items: { color: string; label: string; ring?: boolean }[] }) {
   return (
-    <Box component="ul" sx={{ listStyle: 'none', p: 0, m: 0, mt: 1.5, display: 'flex', flexWrap: 'wrap', gap: 2, justifyContent: 'center', fontSize: 13, color: 'text.secondary' }}>
+    <Box component="ul" sx={{ listStyle: 'none', p: 0, m: 0, display: 'flex', flexWrap: 'wrap', gap: 1.5, fontSize: 13, color: 'text.secondary' }}>
       {items.map((i) => (
         <Box component="li" key={i.label} sx={{ display: 'flex', alignItems: 'center', gap: 0.75 }}>
           <Box
             sx={
               i.ring
-                ? { width: 12, height: 12, borderRadius: '50%', border: 2, borderColor: i.color }
+                ? { width: 12, height: 12, borderRadius: '50%', border: 1.5, borderColor: i.color }
                 : { width: 8, height: 8, borderRadius: '50%', bgcolor: i.color }
             }
           />

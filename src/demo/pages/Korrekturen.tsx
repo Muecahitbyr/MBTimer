@@ -1,6 +1,5 @@
 import { useState, type ReactNode } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import Badge from '@mui/material/Badge';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
@@ -16,6 +15,7 @@ import type { CorrectionRequest } from '../data/types';
 import { formatDate } from '../lib/date';
 import { can } from '../lib/permissions';
 import PageHeader from '../components/PageHeader';
+import CountTab from '../components/CountTab';
 import EmployeeAvatar from '../components/EmployeeAvatar';
 import CorrectionDialog from '../components/CorrectionDialog';
 import { RequestStatusChip } from '../components/StatusChip';
@@ -75,7 +75,7 @@ export default function Korrekturen() {
       {approver && (
         <Tabs value={tab} onChange={(_, v) => setParams(v === 'team' ? { tab: 'team' } : {}, { replace: true })} sx={{ mb: 3, borderBottom: 1, borderColor: 'divider' }}>
           <Tab value="meine" label="Meine Anträge" />
-          <Tab value="team" label={<Badge badgeContent={pending.length} color="error" sx={{ '& .MuiBadge-badge': { right: -14 } }}>Zu genehmigen</Badge>} />
+          <CountTab value="team" label="Zu genehmigen" count={pending.length} />
         </Tabs>
       )}
       {tab === 'meine' ? (

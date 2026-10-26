@@ -1,6 +1,5 @@
 import { useState, type ReactNode } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import Badge from '@mui/material/Badge';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
@@ -16,6 +15,7 @@ import { formatDate } from '../lib/date';
 import { absenceDays, vacationStats } from '../lib/time';
 import { can } from '../lib/permissions';
 import PageHeader from '../components/PageHeader';
+import CountTab from '../components/CountTab';
 import StatCard from '../components/StatCard';
 import EmployeeAvatar from '../components/EmployeeAvatar';
 import AbsenceDialog from '../components/AbsenceDialog';
@@ -89,14 +89,7 @@ export default function Urlaub() {
       {approver && (
         <Tabs value={tab} onChange={(_, v) => setParams(v === 'team' ? { tab: 'team' } : {}, { replace: true })} sx={{ mb: 3, borderBottom: 1, borderColor: 'divider' }}>
           <Tab value="meine" label="Meine Anträge" />
-          <Tab
-            value="team"
-            label={
-              <Badge badgeContent={pending.length} color="error" sx={{ '& .MuiBadge-badge': { right: -14 } }}>
-                Anträge des Teams
-              </Badge>
-            }
-          />
+          <CountTab value="team" label="Anträge des Teams" count={pending.length} />
         </Tabs>
       )}
 

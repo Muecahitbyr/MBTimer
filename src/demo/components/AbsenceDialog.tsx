@@ -112,63 +112,74 @@ function AbsenceForm({ onClose, mode }: Props) {
             </Box>
           )}
 
-          <Box sx={{ border: 1, borderColor: 'divider', borderRadius: 3, p: { xs: 1, sm: 2 }, overflowX: 'auto' }}>
-            <DateCalendar
-              mode="range"
-              label={mode === 'antrag' ? 'Urlaubszeitraum wählen' : 'Zeitraum wählen'}
-              value={range}
-              onChange={(r) => {
-                setRange(r);
-                setError('');
-              }}
-              today={clock.today}
-              min={mode === 'antrag' ? clock.today : state.data.rangeStart}
-              getMeta={getMeta}
-              months={2}
-            />
-            <CalendarLegend
-              items={[
-                { color: 'var(--mui-palette-primary-main)', label: 'Heute', ring: true },
-                { color: HOLIDAY_COLOR, label: 'Feiertag' },
-                { color: ABSENCE_STYLE.urlaub.bg, label: 'Urlaub (geplant/beantragt)' },
-                { color: ABSENCE_STYLE.krank.bg, label: 'Krank' },
-                { color: ABSENCE_STYLE.freistellung.bg, label: 'Freistellung' },
-              ]}
-            />
-          </Box>
+          <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: 'auto 1fr' }, gap: 3, alignItems: 'start' }}>
+            <Box sx={{ border: 1, borderColor: 'divider', borderRadius: 3, py: 1, display: 'flex', justifyContent: 'center' }}>
+              <DateCalendar
+                mode="range"
+                label={mode === 'antrag' ? 'Urlaubszeitraum wählen' : 'Zeitraum wählen'}
+                value={range}
+                onChange={(r) => {
+                  setRange(r);
+                  setError('');
+                }}
+                today={clock.today}
+                min={mode === 'antrag' ? clock.today : state.data.rangeStart}
+                getMeta={getMeta}
+              />
+            </Box>
 
-          <Box
-            aria-live="polite"
-            sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 1.5, p: 2, borderRadius: 3, bgcolor: 'var(--mbt-tint)' }}
-          >
-            <EventOutlined color="primary" aria-hidden="true" />
-            {from ? (
-              <>
-                <Typography sx={{ fontWeight: 700 }}>
-                  {day(from)}
-                  {to && to !== from ? ` – ${day(to)}` : ''}
-                </Typography>
-                <Chip size="small" color="primary" label={`${days} Arbeitstag${days === 1 ? '' : 'e'}`} />
-                {type === 'urlaub' && (
-                  <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                    Resturlaub danach: <strong>{stats.remaining - days} Tage</strong> (von {stats.entitlement})
-                  </Typography>
+            <Box sx={{ display: 'grid', gap: 2 }}>
+              <Box aria-live="polite" sx={{ p: 2.5, borderRadius: 3, bgcolor: 'var(--mbt-tint)' }}>
+                {from ? (
+                  <>
+                    <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 1.5 }}>
+                      {[
+                        { label: 'Erster Tag', value: from },
+                        { label: 'Letzter Tag', value: range.to },
+                      ].map((f) => (
+                        <Box key={f.label} sx={{ p: 1.5, borderRadius: 2, bgcolor: 'background.paper', border: 1, borderColor: f.value ? 'primary.main' : 'divider' }}>
+                          <Typography variant="caption" sx={{ color: 'text.secondary', fontWeight: 600 }}>{f.label}</Typography>
+                          <Typography sx={{ fontWeight: 700 }}>{f.value ? day(f.value) : '–'}</Typography>
+                        </Box>
+                      ))}
+                    </Box>
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 1.5, mt: 2 }}>
+                      <Chip color="primary" label={`${days} Arbeitstag${days === 1 ? '' : 'e'}`} />
+                      {type === 'urlaub' && (
+                        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                          Resturlaub danach: <strong>{stats.remaining - days} Tage</strong> (von {stats.entitlement})
+                        </Typography>
+                      )}
+                    </Box>
+                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 1, mt: 1.5, flexWrap: 'wrap' }}>
+                      <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                        {range.to ? 'Wochenenden und Feiertage sind nicht mitgezählt.' : 'Für mehrere Tage jetzt den letzten Tag wählen.'}
+                      </Typography>
+                      <Button size="small" onClick={() => setRange({ from: null, to: null })}>Auswahl löschen</Button>
+                    </Box>
+                  </>
+                ) : (
+                  <Box sx={{ display: 'flex', gap: 1.5 }}>
+                    <EventOutlined color="primary" aria-hidden="true" />
+                    <Typography sx={{ color: 'text.secondary' }}>
+                      Wählen Sie im Kalender den <strong>ersten</strong> und den <strong>letzten</strong> Tag. Wochenenden und Feiertage werden nicht mitgezählt.
+                    </Typography>
+                  </Box>
                 )}
-                {!range.to && (
-                  <Typography variant="body2" sx={{ color: 'text.secondary' }}>– für mehrere Tage jetzt den letzten Tag wählen</Typography>
-                )}
-                <Box sx={{ flex: 1 }} />
-                <Button size="small" onClick={() => setRange({ from: null, to: null })}>Auswahl löschen</Button>
-              </>
-            ) : (
-              <Typography sx={{ color: 'text.secondary' }}>
-                Wählen Sie im Kalender den <strong>ersten</strong> und den <strong>letzten</strong> Tag. Wochenenden und Feiertage werden nicht mitgezählt.
-              </Typography>
-            )}
+              </Box>
+              <CalendarLegend
+                items={[
+                  { color: 'var(--mui-palette-text-secondary)', label: 'Heute', ring: true },
+                  { color: HOLIDAY_COLOR, label: 'Feiertag' },
+                  { color: ABSENCE_STYLE.urlaub.bg, label: 'Urlaub (geplant/beantragt)' },
+                  { color: ABSENCE_STYLE.krank.bg, label: 'Krank' },
+                  { color: ABSENCE_STYLE.freistellung.bg, label: 'Freistellung' },
+                ]}
+              />
+              <TextField label="Bemerkung (optional)" value={note} onChange={(e) => setNote(e.target.value)} />
+              {error && <Alert severity="error">{error}</Alert>}
+            </Box>
           </Box>
-
-          <TextField label="Bemerkung (optional)" value={note} onChange={(e) => setNote(e.target.value)} />
-          {error && <Alert severity="error">{error}</Alert>}
         </Box>
       </DialogContent>
       <DialogActions sx={{ px: 3, pb: 2 }}>
