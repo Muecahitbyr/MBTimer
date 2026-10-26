@@ -43,9 +43,11 @@ for (const route of PRERENDER_ROUTES) {
   const body = await render(route);
   // Liefert der Server diese Datei für eine andere Route aus (SPA-Fallback), bleibt der Inhalt bis zum Neu-Rendern unsichtbar.
   const guard = `<script>(function(){var p=location.pathname.replace(/\\/+$/,'')||'/';if(p!==${JSON.stringify(route)})document.documentElement.setAttribute('data-spa','')})()</script><style>[data-spa] #root{visibility:hidden}</style>`;
+  // Klicks auf Buttons, bevor die Seite interaktiv ist, merken – main.tsx holt sie nach der Hydration nach.
+  const earlyClicks = `<script>(function(){var q=null;document.addEventListener('click',function(e){if(window.__mbtReady)return;var t=e.target&&e.target.closest&&e.target.closest('button,[role="button"]');if(!t||t.closest('a[href]'))return;e.preventDefault();e.stopPropagation();q=t},true);window.__mbtTakeClick=function(){var t=q;q=null;return t}})()</script>`;
   let html = template
     .replace(/<title>[^<]*<\/title>/, `<title>${escapeHtml(fullTitle(meta.title))}</title>`)
-    .replace('</head>', `${guard}${route === '/' ? heroPreload : ''}</head>`)
+    .replace('</head>', `${guard}${earlyClicks}${route === '/' ? heroPreload : ''}</head>`)
     .replace('<div id="root"></div>', `${colorSchemeScript}<div id="root" data-route="${route}">${body}</div>`);
   html = await optimizeHead(html);
   if (meta.description) {
