@@ -5,8 +5,8 @@ import GlobalStyles from '@mui/material/GlobalStyles';
 import { theme } from './theme/theme';
 
 const globalStyles = {
-  ':root': { '--mbz-tint': '#EEF3FA' },
-  ':root.dark': { '--mbz-tint': '#141B26' },
+  ':root': { '--mbt-tint': '#EEF3FA' },
+  ':root.dark': { '--mbt-tint': '#141B26' },
   html: { scrollBehavior: 'smooth' },
   '@media (prefers-reduced-motion: reduce)': { html: { scrollBehavior: 'auto' } },
 } as const;

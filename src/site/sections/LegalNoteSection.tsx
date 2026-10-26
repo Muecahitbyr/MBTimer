@@ -9,7 +9,7 @@ export default function LegalNoteSection() {
     <Box component="section" aria-labelledby="pflicht-titel" sx={{ py: { xs: 2, md: 3 } }}>
       <Container maxWidth="md">
         <Box sx={{ display: 'flex', gap: 2.5, p: { xs: 3, md: 4 }, borderRadius: 4, border: 1, borderColor: 'divider', bgcolor: 'background.paper', flexDirection: { xs: 'column', sm: 'row' } }}>
-          <Box sx={{ width: 48, height: 48, borderRadius: 3, display: 'grid', placeItems: 'center', bgcolor: 'var(--mbz-tint)', color: 'primary.main', flexShrink: 0 }}>
+          <Box sx={{ width: 48, height: 48, borderRadius: 3, display: 'grid', placeItems: 'center', bgcolor: 'var(--mbt-tint)', color: 'primary.main', flexShrink: 0 }}>
             <GavelOutlined aria-hidden="true" />
           </Box>
           <Box>

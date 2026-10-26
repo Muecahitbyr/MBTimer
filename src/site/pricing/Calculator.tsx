@@ -64,7 +64,7 @@ export default function Calculator({ state, onChange, headingLevel = 'h3' }: Cal
     estimate.kind === 'priced'
       ? `Tarif ${estimate.tier.name}, ${ca(estimate.perMonth)} pro Monat, ${ca(estimate.perYear)} pro Jahr.`
       : 'Mehr als 50 Mitarbeiter: individuelle Kalkulation.';
-  const mailto = `mailto:${siteConfig.contactEmail}?subject=${encodeURIComponent('Unverbindliche Anfrage zu MBzeit')}&body=${encodeURIComponent(`${summary}\n\n`)}`;
+  const mailto = `mailto:${siteConfig.contactEmail}?subject=${encodeURIComponent('Unverbindliche Anfrage zu MBTimer')}&body=${encodeURIComponent(`${summary}\n\n`)}`;
 
   return (
     <Box id="rechner" sx={{ scrollMarginTop: 80, display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 3, mt: { xs: 7, md: 9 } }}>
@@ -150,7 +150,7 @@ export default function Calculator({ state, onChange, headingLevel = 'h3' }: Cal
         </CardContent>
       </Card>
 
-      <Card sx={{ bgcolor: 'var(--mbz-tint)', borderColor: 'transparent' }} aria-labelledby="ergebnis-titel">
+      <Card sx={{ bgcolor: 'var(--mbt-tint)', borderColor: 'transparent' }} aria-labelledby="ergebnis-titel">
         <CardContent sx={{ p: { xs: 3, md: 4 }, display: 'flex', flexDirection: 'column', height: '100%' }}>
           <Typography id="ergebnis-titel" variant="h5" component={headingLevel}>Ihre Beispielrechnung</Typography>
           <Box aria-live="polite" aria-atomic="true" sx={visuallyHidden}>{liveText}</Box>
@@ -161,7 +161,7 @@ export default function Calculator({ state, onChange, headingLevel = 'h3' }: Cal
                 Für {countLabel} Mitarbeiter: <strong>Tarif {estimate.tier.name}</strong>.
               </Typography>
               <Typography sx={{ mt: 1.5, color: 'text.secondary' }}>
-                Für Ihre Praxisgröße erstellen wir gern eine individuelle Kalkulation.
+                Für Ihre Betriebsgröße erstellen wir gern eine individuelle Kalkulation.
               </Typography>
             </Box>
           ) : (

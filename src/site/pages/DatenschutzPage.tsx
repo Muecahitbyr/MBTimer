@@ -128,7 +128,7 @@ export default function DatenschutzPage() {
       <Typography>
         Das Kontaktformular übermittelt keine Daten an einen Server. Beim Absenden öffnet sich Ihr E-Mail-Programm mit
         einer vorbereiteten Nachricht; erst wenn Sie diese E-Mail selbst versenden, erhalten wir Ihre Angaben (z. B. Name,
-        Praxis, E-Mail-Adresse, Telefonnummer und Nachricht). Gleiches gilt, wenn Sie uns direkt per E-Mail schreiben.
+        Firma, E-Mail-Adresse, Telefonnummer und Nachricht). Gleiches gilt, wenn Sie uns direkt per E-Mail schreiben.
       </Typography>
       <Typography>
         Wir verarbeiten diese Daten, um Ihre Anfrage zu beantworten. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO, sofern
@@ -174,12 +174,12 @@ export default function DatenschutzPage() {
         DSGVO) findet nicht statt.
       </Typography>
 
-      <Heading>11. Datenverarbeitung in MBzeit (Produkt)</Heading>
+      <Heading>11. Datenverarbeitung in MBTimer (Produkt)</Heading>
       <Typography>
-        Diese Datenschutzerklärung gilt für die Website. Nutzt eine Praxis die Software MBzeit, verarbeiten wir die darin
-        erfassten Beschäftigtendaten (z. B. Arbeitszeiten und Abwesenheiten) im Auftrag der Praxis. Hierfür wird ein
+        Diese Datenschutzerklärung gilt für die Website. Nutzt ein Unternehmen die Software MBTimer, verarbeiten wir die darin
+        erfassten Beschäftigtendaten (z. B. Arbeitszeiten und Abwesenheiten) im Auftrag des Unternehmens. Hierfür wird ein
         Vertrag zur Auftragsverarbeitung nach Art. 28 DSGVO geschlossen; verantwortlich für diese Daten ist die
-        jeweilige Praxis als Arbeitgeber.
+        jeweilige Unternehmen als Arbeitgeber.
       </Typography>
 
       <Heading>12. Änderungen</Heading>

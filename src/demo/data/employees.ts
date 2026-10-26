@@ -21,7 +21,7 @@ export const employees: Employee[] = [
 /** Personen für die Schnellauswahl im Demo-Login. */
 export const DEMO_PERSONAS = [
   { employeeId: 'e1', title: 'Chef', description: 'Sieht alles: Team, Statistiken, Genehmigungen von Urlaub und Zeitkorrekturen.' },
-  { employeeId: 'e2', title: 'Praxis-Admin', description: 'Verwaltet Mitarbeiter, trägt Krankmeldungen ein, genehmigt Anträge.' },
+  { employeeId: 'e2', title: 'Admin', description: 'Verwaltet Mitarbeiter, trägt Krankmeldungen ein, genehmigt Anträge.' },
   { employeeId: 'e3', title: 'Urlaubsbeauftragte', description: 'Genehmigt Urlaubsanträge und behält den Urlaubskalender im Blick.' },
   { employeeId: 'e4', title: 'Mitarbeiterin', description: 'Stempelt, sieht eigene Zeiten, stellt Urlaubs- und Korrekturanträge.' },
 ] as const;

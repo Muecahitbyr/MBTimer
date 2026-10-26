@@ -1,11 +1,11 @@
-# MBzeit – Webseite & Demo
+# MBTimer – Webseite & Demo
 
-Marketing-Webseite und klickbare Demo für **MBzeit**, eine webbasierte Arbeitszeiterfassung mit
-Personalverwaltung für Arzt- und Zahnarztpraxen. Rein statisch: kein Backend, keine Datenbank,
+Marketing-Webseite und klickbare Demo für **MBTimer**, eine webbasierte Arbeitszeiterfassung mit
+Personalverwaltung für Betriebe jeder Branche mit Mitarbeitern. Rein statisch: kein Backend, keine Datenbank,
 keine Cookies, kein Tracking, keine externen Schriften oder CDNs.
 
 - **Webseite** (`/`, `/preise`, `/impressum`, `/datenschutz`): wird beim Build als statisches HTML vorgerendert.
-- **Demo** (`/demo`): läuft komplett im Browser mit erfundenen Daten der fiktiven „Zahnarztpraxis Sonnenschein“.
+- **Demo** (`/demo`): läuft komplett im Browser mit erfundenen Daten eines Beispielbetriebs (fiktive „Zahnarztpraxis Sonnenschein“).
 
 ## Voraussetzungen
 
@@ -83,7 +83,7 @@ Regeln, die der Code automatisch einhält:
 Nach Änderungen bitte `npm test` ausführen. Die Tests in
 [`src/site/pricing/calculate.test.ts`](src/site/pricing/calculate.test.ts) prüfen die Tarifgrenzen
 1/10/11/25/26/50/51, Jahrespreis, Ersparnis, Einrichtung, Pro-Kopf-Wert, Brutto und ungültige Eingaben.
-Sie gehen von den aktuellen Werten aus (49/89/149 €, Grenzen 10/25/50) und müssen bei geänderten Preisen
+Sie gehen von den aktuellen Werten aus (Starter/Team/Plus: 49/89/149 €, Grenzen 10/25/50) und müssen bei geänderten Preisen
 mit angepasst werden.
 
 Eine Rechnung lässt sich als Link teilen, z. B. `/preise?ma=18&zahlweise=jahr&einrichtung=1` (optional `&brutto=1`).
@@ -104,7 +104,7 @@ Seitentitel und Meta-Beschreibungen in [`src/site/seo.ts`](src/site/seo.ts).
 
 ## Demo
 
-- Login ohne Passwort mit vier Rollen: **Chef**, **Praxis-Admin**, **Urlaubsbeauftragte**, **Mitarbeiterin**. Die Rolle bestimmt, was sichtbar ist (siehe [`src/demo/lib/permissions.ts`](src/demo/lib/permissions.ts)).
+- Login ohne Passwort mit vier Rollen: **Chef**, **Admin**, **Urlaubsbeauftragte**, **Mitarbeiterin**. Die Rolle bestimmt, was sichtbar ist (siehe [`src/demo/lib/permissions.ts`](src/demo/lib/permissions.ts)).
 - **Funktionen:**
   - Dashboard
   - Zeiterfassung mit Stempeln und aufklappbaren Kalenderwochen

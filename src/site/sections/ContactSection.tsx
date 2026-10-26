@@ -16,7 +16,7 @@ import Section from '../components/Section';
 
 interface FormState {
   name: string;
-  praxis: string;
+  firma: string;
   email: string;
   phone: string;
   message: string;
@@ -28,7 +28,7 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export default function ContactSection() {
   const location = useLocation();
   const incoming = (location.state as { message?: string } | null)?.message;
-  const [form, setForm] = useState<FormState>({ name: '', praxis: '', email: '', phone: '', message: incoming ?? '', consent: false });
+  const [form, setForm] = useState<FormState>({ name: '', firma: '', email: '', phone: '', message: incoming ?? '', consent: false });
   const [seenKey, setSeenKey] = useState(location.key);
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
@@ -53,13 +53,13 @@ export default function ContactSection() {
       document.getElementById(`kontakt-${Object.keys(next)[0]}`)?.focus();
       return;
     }
-    const subject = `Anfrage zu MBzeit${form.praxis ? ` – ${form.praxis}` : ''}`;
+    const subject = `Anfrage zu MBTimer${form.firma ? ` – ${form.firma}` : ''}`;
     const body = [
       form.message.trim(),
       '',
       '---',
       `Name: ${form.name}`,
-      form.praxis && `Praxis: ${form.praxis}`,
+      form.firma && `Firma: ${form.firma}`,
       `E-Mail: ${form.email}`,
       form.phone && `Telefon: ${form.phone}`,
     ]
@@ -75,7 +75,7 @@ export default function ContactSection() {
         <CardContent component="form" noValidate onSubmit={onSubmit} sx={{ p: { xs: 3, md: 4 }, display: 'grid', gap: 2.5 }} aria-label="Kontaktformular">
           <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' }, gap: 2.5 }}>
             <TextField id="kontakt-name" label="Name" required value={form.name} onChange={(e) => set('name', e.target.value)} error={!!errors.name} helperText={errors.name} autoComplete="name" size="medium" />
-            <TextField id="kontakt-praxis" label="Praxis" value={form.praxis} onChange={(e) => set('praxis', e.target.value)} autoComplete="organization" size="medium" />
+            <TextField id="kontakt-firma" label="Firma / Betrieb" value={form.firma} onChange={(e) => set('firma', e.target.value)} autoComplete="organization" size="medium" />
             <TextField id="kontakt-email" label="E-Mail" type="email" required value={form.email} onChange={(e) => set('email', e.target.value)} error={!!errors.email} helperText={errors.email} autoComplete="email" size="medium" />
             <TextField id="kontakt-phone" label="Telefon (optional)" type="tel" value={form.phone} onChange={(e) => set('phone', e.target.value)} autoComplete="tel" size="medium" />
           </Box>

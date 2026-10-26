@@ -23,7 +23,7 @@ export default function Section({ id, title, eyebrow, subtitle, tinted, as = 'h2
       sx={{
         py: { xs: 7, md: 11 },
         scrollMarginTop: 72,
-        bgcolor: tinted ? 'var(--mbz-tint)' : 'transparent',
+        bgcolor: tinted ? 'var(--mbt-tint)' : 'transparent',
         '&:focus': { outline: 'none' },
       }}
     >

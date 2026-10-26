@@ -10,7 +10,7 @@ import Section from '../components/Section';
 export default function ProblemSolutionSection() {
   const columns = [
     { title: 'Bisher', items: problemSolution.problems, good: false },
-    { title: 'Mit MBzeit', items: problemSolution.solutions, good: true },
+    { title: 'Mit MBTimer', items: problemSolution.solutions, good: true },
   ];
   return (
     <Section id="problem" title={problemSolution.title} subtitle={problemSolution.intro}>
@@ -18,7 +18,7 @@ export default function ProblemSolutionSection() {
         {columns.map((col) => (
           <Card
             key={col.title}
-            sx={col.good ? { borderColor: 'primary.main', borderWidth: 2 } : { bgcolor: 'var(--mbz-tint)', borderColor: 'transparent' }}
+            sx={col.good ? { borderColor: 'primary.main', borderWidth: 2 } : { bgcolor: 'var(--mbt-tint)', borderColor: 'transparent' }}
           >
             <CardContent sx={{ p: { xs: 3, md: 4 } }}>
               <Typography variant="h5" component="h3" sx={{ mb: 3, color: col.good ? 'primary.main' : 'text.primary' }}>

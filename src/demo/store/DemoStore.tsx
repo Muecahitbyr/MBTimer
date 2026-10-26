@@ -6,7 +6,7 @@ import { todayISO } from '../lib/date';
 import { currentClock, type Clock } from '../lib/time';
 import { demoReducer, type DemoAction, type DemoState } from './reducer';
 
-const STORAGE_KEY = 'mbzeit-demo-v1';
+const STORAGE_KEY = 'mbtimer-demo-v1';
 
 function freshState(): DemoState {
   return { data: createInitialData(todayISO()), currentUserId: null };

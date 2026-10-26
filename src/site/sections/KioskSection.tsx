@@ -23,7 +23,7 @@ export default function KioskSection() {
             width={1180}
             height={820}
             sizes="(min-width: 900px) 58vw, 100vw"
-            alt="Kiosk-Ansicht der MBzeit-Demo auf einem Tablet: Namenskacheln des Teams mit Anwesenheitsstatus und Uhrzeit."
+            alt="Kiosk-Ansicht der MBTimer-Demo auf einem Tablet: Namenskacheln des Teams mit Anwesenheitsstatus und Uhrzeit."
           />
         </TabletFrame>
         <Box>

@@ -72,7 +72,7 @@ export default function DemoLayout() {
             sx={{
               borderRadius: 2,
               mb: 0.5,
-              '&.active': { bgcolor: 'var(--mbz-tint)', color: 'primary.main', fontWeight: 700, '& .MuiListItemIcon-root': { color: 'primary.main' } },
+              '&.active': { bgcolor: 'var(--mbt-tint)', color: 'primary.main', fontWeight: 700, '& .MuiListItemIcon-root': { color: 'primary.main' } },
             }}
           >
             <ListItemIcon sx={{ minWidth: 40 }}>

@@ -37,7 +37,7 @@ export default function PricingSection({ as = 'h2' }: { as?: 'h1' | 'h2' }) {
         </Typography>
       </Box>
 
-      <Box sx={{ mt: 5, p: { xs: 3, md: 4 }, borderRadius: 4, bgcolor: 'var(--mbz-tint)' }}>
+      <Box sx={{ mt: 5, p: { xs: 3, md: 4 }, borderRadius: 4, bgcolor: 'var(--mbt-tint)' }}>
         <Typography variant="h6" component={sub} sx={{ mb: 2 }}>
           In allen Tarifen enthalten
         </Typography>

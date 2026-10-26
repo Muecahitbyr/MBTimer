@@ -16,7 +16,7 @@ export function Logo({ size = 32 }: { size?: number }) {
     <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 1, fontWeight: 750, fontSize: size * 0.62, letterSpacing: '-0.02em', color: 'text.primary' }}>
       <LogoMark size={size} />
       <span>
-        MB<Box component="span" sx={{ color: 'primary.main' }}>zeit</Box>
+        MB<Box component="span" sx={{ color: 'primary.main' }}>Timer</Box>
       </span>
     </Box>
   );

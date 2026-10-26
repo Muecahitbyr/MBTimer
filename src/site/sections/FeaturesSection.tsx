@@ -18,14 +18,14 @@ const shots = [
     small: zeiterfassungSmall,
     label: 'Zeiterfassung',
     caption: 'Monatsübersicht mit Soll/Ist, Überstundenkonto und aufklappbaren Kalenderwochen.',
-    alt: 'Zeiterfassung in der MBzeit-Demo: Monatssumme mit Soll, Ist und Saldo sowie eine aufgeklappte Kalenderwoche mit Stempelzeiten.',
+    alt: 'Zeiterfassung in der MBTimer-Demo: Monatssumme mit Soll, Ist und Saldo sowie eine aufgeklappte Kalenderwoche mit Stempelzeiten.',
   },
   {
     src: kalender,
     small: kalenderSmall,
     label: 'Urlaubskalender',
     caption: 'Teamkalender mit Urlaub, Krankheit, Freistellungen und Feiertagen.',
-    alt: 'Urlaubskalender in der MBzeit-Demo: Monatsraster mit allen Mitarbeitern und farbig markierten Abwesenheiten.',
+    alt: 'Urlaubskalender in der MBTimer-Demo: Monatsraster mit allen Mitarbeitern und farbig markierten Abwesenheiten.',
   },
 ];
 
@@ -34,8 +34,8 @@ export default function FeaturesSection() {
     <Section
       id="funktionen"
       eyebrow="Funktionen"
-      title="Alles, was Ihre Praxis für die Zeiterfassung braucht"
-      subtitle="Von der Stempeluhr am Empfang bis zur Urlaubsplanung – übersichtlich in einer Anwendung."
+      title="Alles, was Ihr Betrieb für die Zeiterfassung braucht"
+      subtitle="Von der Stempeluhr am Eingang bis zur Urlaubsplanung – übersichtlich in einer Anwendung."
       tinted
     >
       <Box sx={{ display: 'grid', gap: { xs: 6, md: 8 } }}>
@@ -52,7 +52,7 @@ export default function FeaturesSection() {
                 const Icon = featureIcons[item.icon];
                 return (
                   <Box component="li" key={item.title} sx={{ p: 2.5, borderRadius: 4, bgcolor: 'background.paper', border: 1, borderColor: 'divider', height: '100%' }}>
-                    <Box sx={{ width: 44, height: 44, borderRadius: 3, display: 'grid', placeItems: 'center', bgcolor: 'var(--mbz-tint)', color: 'primary.main', mb: 1.5 }}>
+                    <Box sx={{ width: 44, height: 44, borderRadius: 3, display: 'grid', placeItems: 'center', bgcolor: 'var(--mbt-tint)', color: 'primary.main', mb: 1.5 }}>
                       <Icon aria-hidden="true" />
                     </Box>
                     <Typography variant="subtitle1" component="h4" sx={{ lineHeight: 1.3 }}>
@@ -71,7 +71,7 @@ export default function FeaturesSection() {
         <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 4 }}>
           {shots.map((s) => (
             <Box component="figure" key={s.label} sx={{ m: 0 }}>
-              <BrowserFrame label={`MBzeit – ${s.label} (Demo)`}>
+              <BrowserFrame label={`MBTimer – ${s.label} (Demo)`}>
                 <Screenshot src={s.src} srcSmall={s.small} width={1440} height={900} alt={s.alt} />
               </BrowserFrame>
               <Typography component="figcaption" variant="body2" sx={{ color: 'text.secondary', mt: 1.5, textAlign: 'center' }}>

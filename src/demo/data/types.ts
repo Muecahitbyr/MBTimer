@@ -87,7 +87,7 @@ export interface DemoData {
 
 export const ROLE_LABELS: Record<Role, string> = {
   chef: 'Chef',
-  admin: 'Praxis-Admin',
+  admin: 'Admin',
   urlaub: 'Urlaubsbeauftragte',
   mitarbeiter: 'Mitarbeiter',
 };

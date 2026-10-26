@@ -38,7 +38,7 @@ export default function PinPad({ value, onChange, length = 4, error }: Props) {
       <Box
         role="status"
         aria-label={`${value.length} von ${length} Ziffern eingegeben`}
-        sx={{ display: 'flex', justifyContent: 'center', gap: 2, mb: 3, animation: error ? 'mbz-shake 0.35s' : undefined, '@keyframes mbz-shake': { '0%, 100%': { transform: 'translateX(0)' }, '25%': { transform: 'translateX(-8px)' }, '75%': { transform: 'translateX(8px)' } } }}
+        sx={{ display: 'flex', justifyContent: 'center', gap: 2, mb: 3, animation: error ? 'mbt-shake 0.35s' : undefined, '@keyframes mbt-shake': { '0%, 100%': { transform: 'translateX(0)' }, '25%': { transform: 'translateX(-8px)' }, '75%': { transform: 'translateX(8px)' } } }}
       >
         {Array.from({ length }, (_, i) => (
           <Box key={i} sx={{ width: 18, height: 18, borderRadius: '50%', border: 2, borderColor: error ? 'error.main' : 'primary.main', bgcolor: i < value.length ? (error ? 'error.main' : 'primary.main') : 'transparent' }} />
@@ -55,7 +55,7 @@ export default function PinPad({ value, onChange, length = 4, error }: Props) {
               borderRadius: 3,
               fontSize: k === 'clear' ? 15 : 26,
               fontWeight: 600,
-              bgcolor: k.length === 1 ? 'var(--mbz-tint)' : 'transparent',
+              bgcolor: k.length === 1 ? 'var(--mbt-tint)' : 'transparent',
               color: 'text.primary',
               '&:hover': { bgcolor: 'action.hover' },
               '&.Mui-focusVisible': { outline: '3px solid', outlineColor: 'primary.main' },

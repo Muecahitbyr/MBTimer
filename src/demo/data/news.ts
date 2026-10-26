@@ -15,7 +15,7 @@ export function createNews(today: ISODate): NewsItem[] {
     {
       id: 'n2',
       title: 'Urlaubsplanung für das kommende Jahr',
-      body: 'Bitte tragt eure Urlaubswünsche für das nächste Jahr bis Ende des Monats in MBzeit ein. Melanie koordiniert die Planung.',
+      body: 'Bitte tragt eure Urlaubswünsche für das nächste Jahr bis Ende des Monats in MBTimer ein. Melanie koordiniert die Planung.',
       authorId: 'e3',
       date: rel(today, -1, 3),
     },

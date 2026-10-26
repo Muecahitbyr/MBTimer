@@ -157,7 +157,7 @@ export default function Kiosk() {
   const time = now.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
 
   return (
-    <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', bgcolor: 'var(--mbz-tint)' }}>
+    <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', bgcolor: 'var(--mbt-tint)' }}>
       <Box sx={{ bgcolor: '#FFF3CD', color: '#4A3500', borderBottom: '1px solid #E8C96B', px: 2, py: 0.5, display: 'flex', alignItems: 'center', gap: 2, flexWrap: 'wrap', fontSize: 14 }}>
         <Button component={RouterLink} to="/demo" size="small" startIcon={<ArrowBack />} sx={{ color: 'inherit' }}>Zurück</Button>
         <strong>Demo-Kiosk – alle Daten sind erfunden, PINs werden angezeigt</strong>
@@ -184,7 +184,7 @@ export default function Kiosk() {
 
       {offline && (
         <Alert severity="error" icon={<WifiOffRounded />} sx={{ mx: { xs: 2, md: 4 }, mb: 2, fontSize: '1rem' }} role="alert">
-          <strong>Keine Internetverbindung.</strong> Stempeln ist gerade nicht möglich. Bitte prüfen Sie die Verbindung des Tablets oder wenden Sie sich an die Praxisleitung.
+          <strong>Keine Internetverbindung.</strong> Stempeln ist gerade nicht möglich. Bitte prüfen Sie die Verbindung des Tablets oder wenden Sie sich an die Leitung.
         </Alert>
       )}
 

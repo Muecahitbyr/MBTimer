@@ -157,7 +157,7 @@ export default function Zeiterfassung() {
               </AccordionSummary>
               <AccordionDetails id={`kw-${kw}`} sx={{ p: 0 }}>
                 <Box role="table" aria-label={`Tage der Kalenderwoche ${kw}`}>
-                  <Box role="row" sx={{ display: { xs: 'none', md: 'grid' }, gridTemplateColumns: COLS.md, gap: 1, px: 2, py: 1, bgcolor: 'var(--mbz-tint)', fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', color: 'text.secondary' }}>
+                  <Box role="row" sx={{ display: { xs: 'none', md: 'grid' }, gridTemplateColumns: COLS.md, gap: 1, px: 2, py: 1, bgcolor: 'var(--mbt-tint)', fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', color: 'text.secondary' }}>
                     {['Tag', 'Status', 'Kommen – Gehen', 'Pause', 'Ist', 'Soll', 'Saldo', ''].map((h, i) => (
                       <Box role="columnheader" key={i}>{h || <span aria-label="Aktion" />}</Box>
                     ))}

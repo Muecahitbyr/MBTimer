@@ -4,7 +4,7 @@
  */
 
 export type VatMode = 'net' | 'kleinunternehmer';
-export type TierId = 'starter' | 'praxis' | 'plus' | 'individuell';
+export type TierId = 'starter' | 'team' | 'plus' | 'individuell';
 
 export interface PricingTier {
   id: TierId;
@@ -48,15 +48,15 @@ export const pricing: PricingConfig = {
       name: 'Starter',
       maxEmployees: 10,
       monthlyNet: 49,
-      tagline: 'Für kleine Praxen und Teams',
+      tagline: 'Für kleine Teams und Betriebe',
       extras: [],
     },
     {
-      id: 'praxis',
-      name: 'Praxis',
+      id: 'team',
+      name: 'Team',
       maxEmployees: 25,
       monthlyNet: 89,
-      tagline: 'Für die typische Zahnarzt- oder Arztpraxis',
+      tagline: 'Für wachsende Teams und mittelgroße Betriebe',
       extras: [],
       badge: 'Beliebt',
     },
@@ -65,7 +65,7 @@ export const pricing: PricingConfig = {
       name: 'Plus',
       maxEmployees: 50,
       monthlyNet: 149,
-      tagline: 'Für größere Praxen und Standorte',
+      tagline: 'Für größere Betriebe und mehrere Standorte',
       extras: ['Mehrere Standorte', 'Bevorzugter Support'],
     },
     {
@@ -73,18 +73,18 @@ export const pricing: PricingConfig = {
       name: 'Individuell',
       maxEmployees: null,
       monthlyNet: null,
-      tagline: 'Über 50 Mitarbeiter oder mehrere Praxen',
-      extras: ['Mehrere Praxen und Standorte', 'Bevorzugter Support', 'Individuelle Abstimmung der Einrichtung'],
+      tagline: 'Über 50 Mitarbeiter oder mehrere Betriebe',
+      extras: ['Mehrere Betriebe und Standorte', 'Bevorzugter Support', 'Individuelle Abstimmung der Einrichtung'],
     },
   ],
   setupService: {
     price: 199,
     label: 'Einrichtungsservice',
-    items: ['Mitarbeiter anlegen', 'Arbeitszeitpläne eintragen', 'Tablet am Empfang einrichten'],
+    items: ['Mitarbeiter anlegen', 'Arbeitszeitpläne eintragen', 'Kiosk-Tablet einrichten'],
   },
   includedFeatures: [
     'Zeiterfassung mit Kommen/Gehen',
-    'Kiosk-Tablet am Empfang',
+    'Kiosk-Tablet als Stempeluhr',
     'Urlaubsanträge & Urlaubskalender',
     'Krankmeldungen',
     'Freistellungen',

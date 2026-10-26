@@ -86,7 +86,7 @@ export default function Urlaubskalender() {
                     component="th"
                     scope="col"
                     key={d}
-                    sx={{ p: 0.5, minWidth: 30, fontWeight: 600, borderBottom: 1, borderColor: 'divider', color: weekday(d) > 5 ? 'text.secondary' : 'text.primary', bgcolor: d === clock.today ? 'var(--mbz-tint)' : weekday(d) > 5 ? 'action.hover' : undefined }}
+                    sx={{ p: 0.5, minWidth: 30, fontWeight: 600, borderBottom: 1, borderColor: 'divider', color: weekday(d) > 5 ? 'text.secondary' : 'text.primary', bgcolor: d === clock.today ? 'var(--mbt-tint)' : weekday(d) > 5 ? 'action.hover' : undefined }}
                   >
                     <Box sx={{ fontSize: 11, color: 'text.secondary' }}>{WEEKDAY_LABELS[weekday(d) - 1]}</Box>
                     {Number(d.slice(8))}
@@ -104,7 +104,7 @@ export default function Urlaubskalender() {
                     const { kind, absence } = cellKind(e.id, d);
                     const label = kind ? `${STYLE[kind].label}${absence?.note && showReasons ? ` (${absence.note})` : ''}${kind === 'feiertag' ? `: ${holidayName(d)}` : ''}` : 'anwesend';
                     return (
-                      <Box component="td" key={d} title={`${fullName(e)}, ${formatDate(d)}: ${label}`} sx={{ p: '3px', borderBottom: 1, borderColor: 'divider', bgcolor: d === clock.today ? 'var(--mbz-tint)' : weekday(d) > 5 ? 'action.hover' : undefined }}>
+                      <Box component="td" key={d} title={`${fullName(e)}, ${formatDate(d)}: ${label}`} sx={{ p: '3px', borderBottom: 1, borderColor: 'divider', bgcolor: d === clock.today ? 'var(--mbt-tint)' : weekday(d) > 5 ? 'action.hover' : undefined }}>
                         <Box sx={{ height: 22, borderRadius: 0.75, background: cellBackground(kind) }} />
                         {kind && kind !== 'wochenende' && kind !== 'frei' && (
                           <Box component="span" sx={visuallyHidden}>{label}</Box>

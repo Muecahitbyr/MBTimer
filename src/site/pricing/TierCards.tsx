@@ -25,7 +25,7 @@ export default function TierCards({ state, headingLevel = 'h3' }: { state: Norma
         const estimate = tier.maxEmployees !== null ? calculateEstimate({ employees: tier.maxEmployees, billing: state.billing, gross: state.gross }, pricing) : null;
         const highlighted = Boolean(tier.badge);
         const isCustom = !estimate || estimate.kind === 'custom';
-        const features = [tierLimit(tier), 'Alle Funktionen inklusive', 'Kiosk-Tablet am Empfang', 'Urlaub, Krankmeldungen & Korrekturen', ...tier.extras];
+        const features = [tierLimit(tier), 'Alle Funktionen inklusive', 'Kiosk-Tablet als Stempeluhr', 'Urlaub, Krankmeldungen & Korrekturen', ...tier.extras];
         return (
           <Box component="li" key={tier.id} sx={{ display: 'flex' }}>
             <Card
@@ -88,8 +88,8 @@ export default function TierCards({ state, headingLevel = 'h3' }: { state: Norma
                   onClick={() =>
                     requestContact(
                       isCustom
-                        ? 'Ich interessiere mich für eine individuelle Kalkulation (über 50 Mitarbeiter oder mehrere Praxen).'
-                        : `Ich möchte MBzeit ${pricing.trialDays} Tage kostenlos testen (Tarif ${tier.name}).`,
+                        ? 'Ich interessiere mich für eine individuelle Kalkulation (über 50 Mitarbeiter oder mehrere Betriebe).'
+                        : `Ich möchte MBTimer ${pricing.trialDays} Tage kostenlos testen (Tarif ${tier.name}).`,
                     )
                   }
                 >

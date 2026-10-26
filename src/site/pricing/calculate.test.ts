@@ -13,8 +13,8 @@ describe('Tarifgrenzen', () => {
   it.each([
     [1, 'starter'],
     [10, 'starter'],
-    [11, 'praxis'],
-    [25, 'praxis'],
+    [11, 'team'],
+    [25, 'team'],
     [26, 'plus'],
     [50, 'plus'],
     [51, 'individuell'],
@@ -103,8 +103,8 @@ describe('Brutto-Umrechnung', () => {
 
 describe('Upgrade-Hinweis', () => {
   it.each([
-    [9, 'praxis'],
-    [10, 'praxis'],
+    [9, 'team'],
+    [10, 'team'],
     [24, 'plus'],
     [25, 'plus'],
     [49, 'individuell'],
@@ -152,7 +152,7 @@ describe('Zusammenfassung für Anfrage', () => {
   it('enthält Tarif, Zahlweise und ca.-Beträge', () => {
     const text = estimateSummary(priced({ employees: 18, billing: 'jahr', setup: true }), 'zzgl. MwSt.');
     expect(text).toBe(
-      'Beispielrechnung: 18 Mitarbeiter, Tarif Praxis, jährlich, mit Einrichtung – ca. 890 €/Jahr + ca. 199 € einmalig (zzgl. MwSt.)',
+      'Beispielrechnung: 18 Mitarbeiter, Tarif Team, jährlich, mit Einrichtung – ca. 890 €/Jahr + ca. 199 € einmalig (zzgl. MwSt.)',
     );
   });
 });

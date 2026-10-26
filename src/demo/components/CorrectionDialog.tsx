@@ -81,7 +81,7 @@ function CorrectionForm({ onClose, employeeId, defaultDate }: Props) {
           </Box>
           <TextField label="Begründung" multiline minRows={2} value={reason} onChange={(e) => setReason(e.target.value)} />
           {error && <Alert severity="error">{error}</Alert>}
-          <Typography variant="body2" sx={{ color: 'text.secondary' }}>Der Antrag wird von Chef oder Praxis-Admin geprüft.</Typography>
+          <Typography variant="body2" sx={{ color: 'text.secondary' }}>Der Antrag wird von Chef oder Admin geprüft.</Typography>
         </Box>
       </DialogContent>
       <DialogActions sx={{ px: 3, pb: 2 }}>

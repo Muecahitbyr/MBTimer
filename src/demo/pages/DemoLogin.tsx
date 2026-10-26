@@ -30,12 +30,12 @@ export default function DemoLogin() {
       <DemoBanner />
       <Container maxWidth="md" component="main" sx={{ py: { xs: 5, md: 8 } }}>
         <Box sx={{ textAlign: 'center', mb: 5 }}>
-          <Box component={RouterLink} to="/" aria-label="Zur MBzeit-Webseite" sx={{ display: 'inline-flex', textDecoration: 'none' }}>
+          <Box component={RouterLink} to="/" aria-label="Zur MBTimer-Webseite" sx={{ display: 'inline-flex', textDecoration: 'none' }}>
             <Logo size={40} />
           </Box>
           <Chip label="Demo-Zugang" color="warning" sx={{ display: 'flex', width: 'fit-content', mx: 'auto', mt: 2 }} />
           <Typography variant="h3" component="h1" sx={{ mt: 2, fontSize: { xs: '1.9rem', md: '2.4rem' } }}>
-            MBzeit ausprobieren
+            MBTimer ausprobieren
           </Typography>
           <Typography sx={{ color: 'text.secondary', mt: 1.5, maxWidth: 560, mx: 'auto' }}>
             Wählen Sie eine Rolle – ganz ohne Passwort. Sie sehen die fiktive „{PRACTICE_NAME}“ mit {employees.length} erfundenen
@@ -78,13 +78,13 @@ export default function DemoLogin() {
           })}
         </Box>
 
-        <Card sx={{ mt: 3, bgcolor: 'var(--mbz-tint)', borderColor: 'transparent' }}>
+        <Card sx={{ mt: 3, bgcolor: 'var(--mbt-tint)', borderColor: 'transparent' }}>
           <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 2, flexWrap: 'wrap' }}>
             <TabletMacOutlined color="primary" sx={{ fontSize: 40 }} aria-hidden="true" />
             <Box sx={{ flex: 1, minWidth: 220 }}>
               <Typography variant="h6" component="h2">Kiosk-Stempeluhr</Typography>
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                So sieht das Tablet am Empfang aus. Die Demo-PINs werden angezeigt.
+                So sieht die Stempeluhr auf dem Tablet aus. Die Demo-PINs werden angezeigt.
               </Typography>
             </Box>
             <Button component={RouterLink} to="/demo/kiosk" variant="contained">Kiosk öffnen</Button>

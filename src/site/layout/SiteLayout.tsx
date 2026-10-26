@@ -36,7 +36,7 @@ export default function SiteLayout() {
       >
         <Container maxWidth="lg">
           <Toolbar disableGutters sx={{ gap: 1, minHeight: { xs: 60, md: 68 } }}>
-            <Box component={RouterLink} to="/" aria-label="MBzeit – zur Startseite" sx={{ textDecoration: 'none', display: 'flex', mr: 2 }}>
+            <Box component={RouterLink} to="/" aria-label="MBTimer – zur Startseite" sx={{ textDecoration: 'none', display: 'flex', mr: 2 }}>
               <Logo />
             </Box>
             <Box component="nav" aria-label="Hauptnavigation" sx={{ display: { xs: 'none', md: 'flex' }, gap: 0.5, flex: 1 }}>

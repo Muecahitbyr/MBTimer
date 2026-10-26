@@ -120,7 +120,7 @@ export default function Dashboard() {
                   { label: 'Urlaubstage (Monat)', value: vacationDays },
                   { label: 'Offene Anträge', value: pendingVacation.length + pendingCorrections.length },
                 ].map((s) => (
-                  <Box key={s.label} sx={{ p: 1.5, borderRadius: 2, bgcolor: 'var(--mbz-tint)' }}>
+                  <Box key={s.label} sx={{ p: 1.5, borderRadius: 2, bgcolor: 'var(--mbt-tint)' }}>
                     <Typography sx={{ fontSize: '1.5rem', fontWeight: 750 }}>{s.value}</Typography>
                     <Typography variant="caption" sx={{ color: 'text.secondary' }}>{s.label}</Typography>
                   </Box>
@@ -131,7 +131,7 @@ export default function Dashboard() {
                 {overtime.slice(0, 6).map(({ e, m }) => (
                   <Box component="li" key={e.id} sx={{ display: 'grid', gridTemplateColumns: '120px 1fr 72px', alignItems: 'center', gap: 1, fontSize: 14 }}>
                     <span>{e.firstName} {e.lastName[0]}.</span>
-                    <Box sx={{ height: 8, borderRadius: 4, bgcolor: 'var(--mbz-tint)', overflow: 'hidden' }}>
+                    <Box sx={{ height: 8, borderRadius: 4, bgcolor: 'var(--mbt-tint)', overflow: 'hidden' }}>
                       <Box sx={{ height: '100%', width: `${(Math.abs(m) / maxOvertime) * 100}%`, bgcolor: m >= 0 ? 'primary.main' : 'error.main' }} />
                     </Box>
                     <Box component="span" sx={{ textAlign: 'right', fontVariantNumeric: 'tabular-nums' }}>{formatDuration(m, true)}</Box>

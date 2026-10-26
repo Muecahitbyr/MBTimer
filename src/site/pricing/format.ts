@@ -26,7 +26,7 @@ export function employeesLabel(n: number, max = 50): string {
   return n > max ? `${max}+` : String(n);
 }
 
-/** Text für Anfrage/E-Mail, z. B. „Beispielrechnung: 18 Mitarbeiter, Tarif Praxis, jährlich, mit Einrichtung – ca. 890 €/Jahr + ca. 199 € einmalig“. */
+/** Text für Anfrage/E-Mail, z. B. „Beispielrechnung: 18 Mitarbeiter, Tarif Team, jährlich, mit Einrichtung – ca. 890 €/Jahr + ca. 199 € einmalig“. */
 export function estimateSummary(e: PricedEstimate, vatSuffix: string): string {
   const { employees, billing, setup } = e.input;
   const price = billing === 'jahr' ? `${ca(e.perYear)}/Jahr` : `${ca(e.perMonth)}/Monat`;

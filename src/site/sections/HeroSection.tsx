@@ -21,7 +21,7 @@ export default function HeroSection() {
       sx={{
         pt: { xs: 6, md: 10 },
         pb: { xs: 7, md: 11 },
-        background: 'linear-gradient(180deg, var(--mbz-tint) 0%, transparent 100%)',
+        background: 'linear-gradient(180deg, var(--mbt-tint) 0%, transparent 100%)',
       }}
     >
       <Container maxWidth="lg">
@@ -53,14 +53,14 @@ export default function HeroSection() {
               ))}
             </Box>
           </Box>
-          <BrowserFrame label="MBzeit – Dashboard (Demo)">
+          <BrowserFrame label="MBTimer – Dashboard (Demo)">
             <Screenshot
               src={dashboard}
               srcSmall={dashboardSmall}
               width={1440}
               height={900}
               priority
-              alt="Dashboard der MBzeit-Demo: Begrüßung, Stempel-Status, Monatssaldo, offene Anträge und wer heute anwesend ist."
+              alt="Dashboard der MBTimer-Demo: Begrüßung, Stempel-Status, Monatssaldo, offene Anträge und wer heute anwesend ist."
             />
           </BrowserFrame>
         </Box>

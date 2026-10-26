@@ -13,7 +13,7 @@ export function BrowserFrame({ children, label }: { children: ReactNode; label?:
         boxShadow: '0 24px 60px -24px rgba(16, 36, 66, 0.35)',
       }}
     >
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75, px: 1.5, py: 1, borderBottom: 1, borderColor: 'divider', bgcolor: 'var(--mbz-tint)' }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75, px: 1.5, py: 1, borderBottom: 1, borderColor: 'divider', bgcolor: 'var(--mbt-tint)' }}>
         {['#E57373', '#FFB74D', '#81C784'].map((c) => (
           <Box key={c} sx={{ width: 10, height: 10, borderRadius: '50%', bgcolor: c }} />
         ))}

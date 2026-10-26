@@ -41,7 +41,7 @@ export default function ComparisonTable() {
     { label: 'Alle Funktionen', cell: () => yes, mobileOnly: true },
     ...pricing.includedFeatures.map((f) => ({ label: f, cell: () => yes, desktopOnly: true })),
     { label: 'Mehrere Standorte', cell: (t: PricingTier) => (t.extras.some((e) => e.includes('Standorte')) ? yes : no) },
-    { label: 'Mehrere Praxen', cell: (t: PricingTier) => (t.extras.some((e) => e.includes('Praxen')) ? yes : no) },
+    { label: 'Mehrere Betriebe', cell: (t: PricingTier) => (t.extras.some((e) => e.includes('Betriebe')) ? yes : no) },
     { label: 'Bevorzugter Support', cell: (t: PricingTier) => (t.extras.includes('Bevorzugter Support') ? yes : no) },
   ];
 
@@ -55,7 +55,7 @@ export default function ComparisonTable() {
       </Typography>
       <TableContainer sx={{ border: 1, borderColor: 'divider', borderRadius: 4, bgcolor: 'background.paper' }}>
         <Table size="small" sx={{ '& td, & th': { px: { xs: 0.5, sm: 2 }, fontSize: { xs: '0.72rem', sm: '0.875rem' }, '@media (max-width: 359px)': { px: 0.25, fontSize: '0.66rem' } } }}>
-          <caption style={{ captionSide: 'bottom' }}>Vergleich der MBzeit-Tarife (Richtwerte, {vatNote()})</caption>
+          <caption style={{ captionSide: 'bottom' }}>Vergleich der MBTimer-Tarife (Richtwerte, {vatNote()})</caption>
           <TableHead>
             <TableRow>
               <TableCell component="th" scope="col">Leistung</TableCell>
