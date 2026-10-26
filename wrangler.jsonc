@@ -1,0 +1,12 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // Rein statische Seite: Cloudflare Workers liefert nur dist/ aus, kein Server-Code.
+  "name": "mbzeit-website",
+  "compatibility_date": "2026-06-01",
+  "assets": {
+    "directory": "./dist",
+    // Vorgerenderte Seiten (z. B. dist/preise/index.html) zuerst, sonst index.html (Demo-Routen).
+    "not_found_handling": "single-page-application",
+    "html_handling": "drop-trailing-slash"
+  }
+}

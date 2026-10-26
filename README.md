@@ -36,18 +36,24 @@ Das Skript startet selbst einen Dev-Server, meldet sich in der Demo an und fotog
 > Startseiten-Datei aus. Die Seite funktioniert trotzdem (sie wird dann im Browser gerendert), nur das
 > Prerendering greift lokal dort nicht. Auf Cloudflare wird `preise/index.html` direkt ausgeliefert.
 
-## Deployment (Cloudflare)
+## Deployment (Cloudflare Workers)
 
-`dist/` ist ein fertiger statischer Ordner. Es wurde nichts deployt.
+Live: **https://mbzeit-website.mucahitbayar.workers.dev**
 
-- **Cloudflare Pages:** Build-Befehl `npm run build`, Ausgabeordner `dist`. Da es keine `404.html` gibt,
-  behandelt Pages das Projekt als Single-Page-App: Vorhandene Dateien (z. B. `preise/index.html`) werden direkt
-  ausgeliefert, alle anderen Pfade (z. B. `/demo/kiosk`) bekommen `index.html`.
-- **Cloudflare Workers (Static Assets):** `assets.directory = "./dist"` und
-  `assets.not_found_handling = "single-page-application"`.
+```bash
+npm run deploy       # baut (inkl. Prerendering) und lädt dist/ hoch (wrangler deploy)
+```
 
-Andere Pfade als die vorgerenderten bekommen also die Startseiten-HTML. Ein kleines Inline-Skript blendet
-deren Inhalt dann aus, und die App rendert die richtige Seite im Browser.
+Konfiguration in [`wrangler.jsonc`](wrangler.jsonc): Worker `mbzeit-website`, nur statische Assets aus `dist/`,
+kein Server-Code. Voraussetzung: einmalig `npx wrangler login`.
+
+- `not_found_handling: "single-page-application"`: Vorhandene Dateien (z. B. `preise/index.html`) werden direkt
+  ausgeliefert, alle anderen Pfade (z. B. `/demo/kiosk`) bekommen `index.html`. Ein kleines Inline-Skript blendet
+  deren Inhalt aus, bis die App die richtige Seite im Browser gerendert hat.
+- `html_handling: "drop-trailing-slash"`: `/preise/` leitet auf `/preise` um.
+
+Alternativ läuft `dist/` auch auf Cloudflare Pages (Build-Befehl `npm run build`, Ausgabeordner `dist`).
+Ohne `404.html` behandelt Pages das Projekt automatisch als Single-Page-App.
 
 ## Preise ändern
 
