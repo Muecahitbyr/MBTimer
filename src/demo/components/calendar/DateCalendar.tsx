@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import dayjs, { type Dayjs } from 'dayjs';
 import 'dayjs/locale/de';
 import Badge from '@mui/material/Badge';
@@ -131,6 +131,10 @@ function CalendarDay(props: PickerDayProps & DayExtraProps) {
 export default function DateCalendar({ mode, value, onChange, today, min, max, getMeta, label }: DateCalendarProps) {
   const [hover, setHover] = useState<ISODate | null>(null);
   const [focusDate, setFocusDate] = useState<ISODate>(value.from ?? today);
+  // Stabile Objekte: Ein neues dayjs-Objekt bei jedem Rendern (z. B. durch die Hover-Vorschau)
+  // hält MUI für eine neue Auswahl und springt dann zurück in deren Monat.
+  const selectedDay = useMemo(() => dayjs(focusDate), [focusDate]);
+  const [referenceDay] = useState(() => dayjs(value.from ?? today));
   const meta = (d: ISODate) => getMeta?.(d) ?? {};
 
   const rangeEnd = value.to ?? (mode === 'range' && value.from && hover ? hover : null);
@@ -158,8 +162,8 @@ export default function DateCalendar({ mode, value, onChange, today, min, max, g
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="de" localeText={localeText}>
       <Box onMouseLeave={() => setHover(null)} aria-label={label} role="group">
         <MuiDateCalendar
-          value={dayjs(focusDate)}
-          referenceDate={dayjs(value.from ?? today)}
+          value={selectedDay}
+          referenceDate={referenceDay}
           onChange={(d: Dayjs | null) => d && select(iso(d))}
           minDate={min ? dayjs(min) : undefined}
           maxDate={max ? dayjs(max) : undefined}

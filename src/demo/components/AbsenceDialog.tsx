@@ -72,6 +72,8 @@ function AbsenceForm({ onClose, mode }: Props) {
   const submit = () => {
     if (!from || !to) return setError('Bitte wählen Sie im Kalender den ersten und letzten Tag.');
     if (days === 0) return setError('Im gewählten Zeitraum liegen keine Arbeitstage.');
+    if (mode === 'antrag' && type === 'urlaub' && days > stats.remaining)
+      return setError(`Der Zeitraum umfasst ${days} Arbeitstage, Ihr Resturlaub beträgt nur ${stats.remaining} Tage.`);
     if (existing.some((a) => a.from <= to && from <= a.to))
       return setError('Im Zeitraum gibt es bereits eine Abwesenheit oder einen offenen Antrag.');
     dispatch({
@@ -146,8 +148,12 @@ function AbsenceForm({ onClose, mode }: Props) {
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 1.5, mt: 2 }}>
                       <Chip color="primary" label={`${days} Arbeitstag${days === 1 ? '' : 'e'}`} />
                       {type === 'urlaub' && (
-                        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                          Resturlaub danach: <strong>{stats.remaining - days} Tage</strong> (von {stats.entitlement})
+                        <Typography variant="body2" sx={{ color: stats.remaining - days < 0 ? 'error.main' : 'text.secondary' }}>
+                          {stats.remaining - days < 0 ? (
+                            <>Übersteigt Ihren Resturlaub um <strong>{days - stats.remaining} Tage</strong></>
+                          ) : (
+                            <>Resturlaub danach: <strong>{stats.remaining - days} Tage</strong> (von {stats.entitlement})</>
+                          )}
                         </Typography>
                       )}
                     </Box>
