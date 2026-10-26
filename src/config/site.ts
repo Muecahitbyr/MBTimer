@@ -1,7 +1,6 @@
 /**
- * Texte der Webseite. Werte in {{…}} sind Platzhalter und müssen vor Veröffentlichung ersetzt werden.
- * Hinweis: Keine unbelegten Aussagen (Serverstandort, Zertifikate, Kundenzahlen, Kundenstimmen) –
- * solche Stellen sind mit {{TODO}} markiert.
+ * Texte der Webseite.
+ * Hinweis: Keine unbelegten Aussagen (Serverstandort, Zertifikate, Kundenzahlen, Kundenstimmen) aufnehmen.
  */
 
 import { provider } from './legal';
@@ -145,7 +144,7 @@ export interface FaqItem {
 export const faq: FaqItem[] = [
   {
     q: 'Wie steht es um den Datenschutz?',
-    a: 'MBzeit verarbeitet nur die Daten, die für Zeiterfassung und Personalverwaltung nötig sind. Zugriffe sind über Rollen geregelt, Änderungen werden protokolliert. {{TODO: Angaben zu Hosting-Standort, Auftragsverarbeitungsvertrag (AVV) und technischen Maßnahmen ergänzen}}',
+    a: 'MBzeit verarbeitet nur die Daten, die für Zeiterfassung und Personalverwaltung nötig sind. Zugriffe sind über Rollen geregelt, Änderungen werden protokolliert. Für die Verarbeitung der Beschäftigtendaten schließen wir mit Ihrer Praxis einen Vertrag zur Auftragsverarbeitung nach Art. 28 DSGVO. Details zu Hosting und technischen Maßnahmen erhalten Sie gern auf Anfrage.',
   },
   {
     q: 'Wie aufwendig ist die Einrichtung?',
@@ -157,11 +156,11 @@ export const faq: FaqItem[] = [
   },
   {
     q: 'Wie erreiche ich den Support?',
-    a: '{{TODO: Support-Kanäle, Erreichbarkeit und Reaktionszeiten ergänzen}}',
+    a: `Schreiben Sie uns jederzeit an ${siteConfig.contactEmail} – wir melden uns schnellstmöglich. Bei der Einrichtung unterstützen wir Sie auf Wunsch persönlich (siehe Einrichtungsservice unter Preise).`,
   },
   {
     q: 'Wie kann ich kündigen?',
-    a: '{{TODO: Kündigungsfrist aus AGB}}',
+    a: 'MBzeit ist monatlich kündbar – eine formlose E-Mail genügt. Die genauen Bedingungen, auch bei jährlicher Zahlweise, stehen in Ihrem individuellen Angebot.',
   },
 ];
 

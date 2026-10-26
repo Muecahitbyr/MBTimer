@@ -36,24 +36,23 @@ Das Skript startet selbst einen Dev-Server, meldet sich in der Demo an und fotog
 > Startseiten-Datei aus. Die Seite funktioniert trotzdem (sie wird dann im Browser gerendert), nur das
 > Prerendering greift lokal dort nicht. Auf Cloudflare wird `preise/index.html` direkt ausgeliefert.
 
-## Deployment (Cloudflare Workers)
+## Deployment (Vercel)
 
-Live: **https://mbzeit-website.mucahitbayar.workers.dev**
+Live: **https://mbtimer.vercel.app**
 
-```bash
-npm run deploy       # baut (inkl. Prerendering) und lädt dist/ hoch (wrangler deploy)
-```
+Das Vercel-Projekt `mbtimer` ist mit diesem GitHub-Repository verbunden: **Jeder Push auf `main` wird automatisch
+gebaut und veröffentlicht.** Andere Branches erhalten Vorschau-URLs.
 
-Konfiguration in [`wrangler.jsonc`](wrangler.jsonc): Worker `mbzeit-website`, nur statische Assets aus `dist/`,
-kein Server-Code. Voraussetzung: einmalig `npx wrangler login`.
+Konfiguration in [`vercel.json`](vercel.json):
 
-- `not_found_handling: "single-page-application"`: Vorhandene Dateien (z. B. `preise/index.html`) werden direkt
-  ausgeliefert, alle anderen Pfade (z. B. `/demo/kiosk`) bekommen `index.html`. Ein kleines Inline-Skript blendet
-  deren Inhalt aus, bis die App die richtige Seite im Browser gerendert hat.
-- `html_handling: "drop-trailing-slash"`: `/preise/` leitet auf `/preise` um.
+- Build `npm run build` (inkl. Prerendering), Ausgabe `dist/`, nur statische Dateien, kein Server-Code.
+- Vorgerenderte Seiten (z. B. `dist/preise/index.html`) werden direkt ausgeliefert; alle anderen Pfade
+  (z. B. `/demo/kiosk`) bekommen `index.html`. Ein kleines Inline-Skript blendet deren Inhalt aus, bis die App die
+  richtige Seite im Browser gerendert hat.
+- `trailingSlash: false`: `/preise/` leitet auf `/preise` um.
+- Gehashte Dateien unter `/assets/` werden ein Jahr lang gecacht.
 
-Alternativ läuft `dist/` auch auf Cloudflare Pages (Build-Befehl `npm run build`, Ausgabeordner `dist`).
-Ohne `404.html` behandelt Pages das Projekt automatisch als Single-Page-App.
+Manuell geht es auch per CLI: `npx vercel deploy --prod`.
 
 ## Preise ändern
 
@@ -94,19 +93,14 @@ Eine Rechnung lässt sich als Link teilen, z. B. `/preise?ma=18&zahlweise=jahr&e
 Webseitentexte (Hero, Funktionen, Schritte, Kiosk, FAQ, Kontakt) stehen in [`src/config/site.ts`](src/config/site.ts),
 Seitentitel und Meta-Beschreibungen in [`src/site/seo.ts`](src/site/seo.ts).
 
-**Vor einer Veröffentlichung zu ersetzen:**
+**Rechtliches und Kontakt:**
 
-- Erledigt: Kontakt-E-Mail `info@bayar-solutions.de` (`src/config/site.ts`), Impressum und Anbieterangaben
-  von bayar-solutions.de (`src/config/legal.ts`, Fußzeile „© BAYAR-SOLUTIONS“).
-- `src/config/site.ts`
-  - FAQ „Datenschutz“: Hosting-Standort, AVV, technische Maßnahmen
-  - FAQ „Support“: Kanäle, Erreichbarkeit
-  - FAQ „Kündigung“: Kündigungsfrist aus den AGB
-- `src/site/pages/DatenschutzPage.tsx`: Abschnitte 2–7 mit `{{PLATZHALTER}}`/`{{TODO}}` (rechtlich prüfen lassen)
+- Kontakt-E-Mail `info@bayar-solutions.de`: in `src/config/site.ts`
+- Anbieterangaben für Impressum, Datenschutz und Fußzeile: in `src/config/legal.ts`
+- Datenschutzerklärung (Hosting bei Vercel, keine Cookies, kein Tracking): in
+  `src/site/pages/DatenschutzPage.tsx`. Bitte rechtlich prüfen lassen, vor allem nach Änderungen an Hosting oder
+  Funktionen (z. B. wenn Analyse-Werkzeuge dazukommen).
 - Bewusst **nicht** enthalten, weil unbelegt: Serverstandort, Zertifikate, Kundenzahlen, Kundenstimmen, Logos.
-  Wo solche Angaben hingehören, steht im Text ein `{{TODO}}`.
-
-Alle offenen Platzhalter findest du mit `grep -rn "{{[A-Z]" src`.
 
 ## Demo
 
