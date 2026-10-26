@@ -8,7 +8,7 @@ import { provider } from './legal';
 export const siteConfig = {
   productName: 'MBzeit',
   /** Empfänger für Kontaktformular und Anfragen (mailto). */
-  contactEmail: 'info@bayar-solutions.de',
+  contactEmail: provider.email,
   companyName: provider.company,
 };
 
