@@ -7,7 +7,8 @@ import Screenshot from '../components/Screenshot';
 
 // Echte Screenshots der Demo (erzeugt mit npm run screenshots).
 const SHOTS = {
-  handy: { src: '/screenshots/handy.webp', small: '/screenshots/handy-small.webp', width: 780, height: 1688 },
+  // Handy: echter Screenshot aus der App (zugeschnitten, Praxisname unkenntlich gemacht)
+  handy: { src: '/screenshots/handy-echt.webp', small: '/screenshots/handy-echt-small.webp', width: 780, height: 1418 },
   kiosk: { src: '/screenshots/kiosk.webp', small: '/screenshots/kiosk-small.webp', width: 1180, height: 820 },
   desktop: { src: '/screenshots/dashboard.webp', small: '/screenshots/dashboard-small.webp', width: 1440, height: 900 },
 };
@@ -27,7 +28,7 @@ function Stage({ children }: { children: ReactNode }) {
 function PhoneFrame({ children }: { children: ReactNode }) {
   return (
     <Box sx={{ width: { xs: 210, md: 225 }, p: '7px', bgcolor: '#111111', borderRadius: '38px', boxSizing: 'border-box' }}>
-      <Box sx={{ borderRadius: '31px', overflow: 'hidden', bgcolor: '#FFFFFF', pt: '24px', pb: '24px' }}>
+      <Box sx={{ borderRadius: '31px', overflow: 'hidden', bgcolor: '#FFFFFF', pt: '24px' }}>
         <Box sx={{ lineHeight: 0 }}>{children}</Box>
       </Box>
     </Box>
@@ -68,7 +69,7 @@ const devices = [
           {...SHOTS.handy}
           srcSmall={SHOTS.handy.small}
           sizes="225px"
-          alt="MBTimer-Demo auf dem Handy: Begrüßung, Button „Kommen stempeln“, Monatssaldo und Überstundenkonto."
+          alt="MBTimer am Handy: Dashboard mit „Zeiterfassung heute“ und Urlaubstagen."
         />
       </PhoneFrame>
     ),
@@ -132,7 +133,7 @@ export default function DevicesSection() {
           </Box>
         ))}
       </Box>
-      <Typography sx={{ mt: 3, fontFamily: MONO, fontSize: 12, color: 'text.secondary' }}>Echte Screenshots aus der Demo – alle Daten erfunden.</Typography>
+      <Typography sx={{ mt: 3, fontFamily: MONO, fontSize: 12, color: 'text.secondary' }}>Handy: Screenshot aus der App · Tablet und PC: Screenshots aus der Demo mit erfundenen Daten.</Typography>
     </Section>
   );
 }
