@@ -85,9 +85,9 @@ function Laptop() {
 }
 
 const devices = [
-  { nr: '01', label: 'Handy', title: 'Unterwegs, im Außendienst, im Homeoffice', text: 'Stempeln, Urlaub beantragen und die eigenen Stunden prüfen – direkt im Browser des Handys.', visual: <Phone /> },
-  { nr: '02', label: 'Tablet', title: 'Die Stempeluhr am Eingang', text: 'Name antippen, persönliche PIN eingeben, fertig. Fehlt das Internet, zeigt der Kiosk es deutlich an.', visual: <Tablet /> },
-  { nr: '03', label: 'PC', title: 'Für Leitung und Verwaltung', text: 'Monatsübersicht, Anträge genehmigen, Urlaubskalender und Statistiken für das ganze Team.', visual: <Laptop /> },
+  { nr: '01', label: 'Handy', title: 'Unterwegs', text: 'Stempeln und Urlaub beantragen – auch im Außendienst.', visual: <Phone /> },
+  { nr: '02', label: 'Tablet', title: 'Am Eingang', text: 'Die Stempeluhr: Name antippen, PIN eingeben, fertig.', visual: <Tablet /> },
+  { nr: '03', label: 'PC', title: 'Im Büro', text: 'Übersicht, Genehmigungen und Statistiken für die Leitung.', visual: <Laptop /> },
 ];
 
 export default function DevicesSection() {
@@ -96,7 +96,7 @@ export default function DevicesSection() {
       id="geraete"
       eyebrow="Handy · Tablet · PC"
       title={'Ein Konto.\nDrei Wege zu stempeln.'}
-      subtitle="Läuft im Browser. Keine App aus dem Store, keine Installation – einfach anmelden. Am Tablet lässt sich MBTimer als Vollbild-App einrichten."
+      subtitle="Läuft im Browser – keine App, keine Installation."
       tinted
     >
       <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: 'repeat(3, minmax(0, 1fr))' }, gap: 4 }}>

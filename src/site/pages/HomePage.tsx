@@ -3,17 +3,22 @@ import { pricing } from '../../config/pricing';
 import { usePageMeta } from '../../components/usePageMeta';
 import { pageMeta } from '../seo';
 import HeroSection from '../sections/HeroSection';
-import LegalNoteSection from '../sections/LegalNoteSection';
-import ProblemSolutionSection from '../sections/ProblemSolutionSection';
-import FeaturesSection from '../sections/FeaturesSection';
 import DevicesSection from '../sections/DevicesSection';
-import HowItWorksSection from '../sections/HowItWorksSection';
-import KioskSection from '../sections/KioskSection';
+import FeaturesSection from '../sections/FeaturesSection';
 import PricingSection from '../pricing/PricingSection';
 import FaqSection from '../sections/FaqSection';
 import ContactSection from '../sections/ContactSection';
 
-const homeFaq = [...faq.slice(0, 3), ...getPricingFaq(pricing.setupService.price), ...faq.slice(3)];
+// Startseite bewusst kurz: die fünf häufigsten Fragen; alle Preisfragen stehen unter /preise.
+const allFaq = [...faq, ...getPricingFaq(pricing.setupService.price)];
+const homeQuestions = [
+  'Ist Arbeitszeiterfassung Pflicht?',
+  'Welche Geräte brauche ich?',
+  'Sind die Preise verbindlich?',
+  'Wie steht es um den Datenschutz?',
+  'Wie kann ich kündigen?',
+];
+const homeFaq = homeQuestions.map((q) => allFaq.find((f) => f.q === q)).filter((f) => f !== undefined);
 
 export default function HomePage() {
   usePageMeta(pageMeta['/']);
@@ -21,12 +26,8 @@ export default function HomePage() {
     <>
       <HeroSection />
       <DevicesSection />
-      <ProblemSolutionSection />
       <FeaturesSection />
-      <HowItWorksSection />
-      <KioskSection />
-      <LegalNoteSection />
-      <PricingSection />
+      <PricingSection compact />
       <FaqSection items={homeFaq} />
       <ContactSection />
     </>

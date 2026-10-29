@@ -90,7 +90,7 @@ Eine Rechnung lässt sich als Link teilen, z. B. `/preise?ma=18&zahlweise=jahr&e
 
 ## Texte und Platzhalter
 
-Webseitentexte (Hero, Funktionen, Schritte, Kiosk, FAQ, Kontakt) stehen in [`src/config/site.ts`](src/config/site.ts),
+Webseitentexte (Hero, Funktionen, FAQ, Kontakt) stehen in [`src/config/site.ts`](src/config/site.ts),
 Seitentitel und Meta-Beschreibungen in [`src/site/seo.ts`](src/site/seo.ts).
 
 **Rechtliches und Kontakt:**
