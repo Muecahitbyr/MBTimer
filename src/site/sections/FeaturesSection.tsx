@@ -1,8 +1,8 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { featureGroups } from '../../config/site';
+import { MONO } from '../../theme/theme';
 import Section from '../components/Section';
-import { featureIcons } from '../components/featureIcons';
 import { BrowserFrame } from '../components/DeviceFrames';
 import Screenshot from '../components/Screenshot';
 
@@ -16,70 +16,66 @@ const shots = [
   {
     src: zeiterfassung,
     small: zeiterfassungSmall,
-    label: 'Zeiterfassung',
+    label: 'mbtimer.vercel.app/demo · Zeiterfassung',
     caption: 'Monatsübersicht mit Soll/Ist, Überstundenkonto und aufklappbaren Kalenderwochen.',
     alt: 'Zeiterfassung in der MBTimer-Demo: Monatssumme mit Soll, Ist und Saldo sowie eine aufgeklappte Kalenderwoche mit Stempelzeiten.',
   },
   {
     src: kalender,
     small: kalenderSmall,
-    label: 'Urlaubskalender',
+    label: 'mbtimer.vercel.app/demo · Urlaubskalender',
     caption: 'Teamkalender mit Urlaub, Krankheit, Freistellungen und Feiertagen.',
-    alt: 'Urlaubskalender in der MBTimer-Demo: Monatsraster mit allen Mitarbeitern und farbig markierten Abwesenheiten.',
+    alt: 'Urlaubskalender in der MBTimer-Demo: Zeitleiste mit allen Mitarbeitern und farbigen Balken für Abwesenheiten.',
   },
 ];
+
+// Durchgehende Nummerierung über alle Gruppen (01, 02, …).
+const numberedGroups = featureGroups.map((group, gi) => {
+  const offset = featureGroups.slice(0, gi).reduce((n, g) => n + g.items.length, 0);
+  return { ...group, items: group.items.map((item, i) => ({ ...item, nr: String(offset + i + 1).padStart(2, '0') })) };
+});
 
 export default function FeaturesSection() {
   return (
     <Section
       id="funktionen"
       eyebrow="Funktionen"
-      title="Alles, was Ihr Betrieb für die Zeiterfassung braucht"
-      subtitle="Von der Stempeluhr am Eingang bis zur Urlaubsplanung – übersichtlich in einer Anwendung."
-      tinted
+      title={'Alles drin.\nNichts zu viel.'}
+      subtitle="Von der Stempeluhr am Eingang bis zur Urlaubsplanung – in einer Anwendung, für jede Betriebsgröße."
     >
-      <Box sx={{ display: 'grid', gap: { xs: 6, md: 8 } }}>
-        {featureGroups.map((group) => (
+      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: 'repeat(2, minmax(0, 1fr))' }, columnGap: 8, rowGap: 7 }}>
+        {numberedGroups.map((group) => (
           <Box key={group.title} component="article" aria-labelledby={`fg-${group.title}`}>
-            <Box sx={{ mb: 2.5 }}>
-              <Typography id={`fg-${group.title}`} variant="h5" component="h3">
-                {group.title}
-              </Typography>
-              <Typography sx={{ color: 'text.secondary' }}>{group.description}</Typography>
+            <Box sx={{ pb: 1.5, borderBottom: 1.5, borderColor: 'var(--mbt-ink)' }}>
+              <Typography id={`fg-${group.title}`} variant="h5" component="h3">{group.title}</Typography>
+              <Typography sx={{ color: 'text.secondary', fontSize: 14, mt: 0.5 }}>{group.description}</Typography>
             </Box>
-            <Box component="ul" sx={{ listStyle: 'none', p: 0, m: 0, display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr', md: 'repeat(4, 1fr)' }, gap: 2 }}>
-              {group.items.map((item) => {
-                const Icon = featureIcons[item.icon];
-                return (
-                  <Box component="li" key={item.title} sx={{ p: 2.5, borderRadius: 4, bgcolor: 'background.paper', border: 1, borderColor: 'divider', height: '100%' }}>
-                    <Box sx={{ width: 44, height: 44, borderRadius: 3, display: 'grid', placeItems: 'center', bgcolor: 'var(--mbt-tint)', color: 'primary.main', mb: 1.5 }}>
-                      <Icon aria-hidden="true" />
-                    </Box>
-                    <Typography variant="subtitle1" component="h4" sx={{ lineHeight: 1.3 }}>
-                      {item.title}
-                    </Typography>
-                    <Typography variant="body2" sx={{ color: 'text.secondary', mt: 0.5 }}>
-                      {item.text}
-                    </Typography>
+            <Box component="ol" sx={{ listStyle: 'none', p: 0, m: 0 }}>
+              {group.items.map((item) => (
+                <Box component="li" key={item.title} sx={{ display: 'grid', gridTemplateColumns: '44px 1fr', py: 2, borderBottom: 1, borderColor: 'divider' }}>
+                  <Box sx={{ fontFamily: MONO, fontSize: 13, color: 'text.secondary', pt: '3px' }}>{item.nr}</Box>
+                  <Box>
+                    <Typography sx={{ fontSize: '1.08rem', fontWeight: 600, lineHeight: 1.35 }}>{item.title}</Typography>
+                    <Typography sx={{ color: 'text.secondary', fontSize: 15, mt: 0.25, lineHeight: 1.55 }}>{item.text}</Typography>
                   </Box>
-                );
-              })}
+                </Box>
+              ))}
             </Box>
           </Box>
         ))}
+      </Box>
 
-        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 4 }}>
-          {shots.map((s) => (
-            <Box component="figure" key={s.label} sx={{ m: 0 }}>
-              <BrowserFrame label={`MBTimer – ${s.label} (Demo)`}>
-                <Screenshot src={s.src} srcSmall={s.small} width={1440} height={900} alt={s.alt} />
-              </BrowserFrame>
-              <Typography component="figcaption" variant="body2" sx={{ color: 'text.secondary', mt: 1.5, textAlign: 'center' }}>
-                {s.caption} <em>Screenshot aus der Demo mit erfundenen Daten.</em>
-              </Typography>
-            </Box>
-          ))}
-        </Box>
+      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 4, mt: { xs: 8, md: 11 } }}>
+        {shots.map((s) => (
+          <Box component="figure" key={s.label} sx={{ m: 0 }}>
+            <BrowserFrame label={s.label}>
+              <Screenshot src={s.src} srcSmall={s.small} width={1440} height={900} alt={s.alt} />
+            </BrowserFrame>
+            <Typography component="figcaption" variant="body2" sx={{ color: 'text.secondary', mt: 1.5 }}>
+              {s.caption} <Box component="span" sx={{ fontFamily: MONO, fontSize: 12 }}>Echter Screenshot, erfundene Daten.</Box>
+            </Typography>
+          </Box>
+        ))}
       </Box>
     </Section>
   );

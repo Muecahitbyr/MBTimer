@@ -6,6 +6,7 @@ import HeroSection from '../sections/HeroSection';
 import LegalNoteSection from '../sections/LegalNoteSection';
 import ProblemSolutionSection from '../sections/ProblemSolutionSection';
 import FeaturesSection from '../sections/FeaturesSection';
+import DevicesSection from '../sections/DevicesSection';
 import HowItWorksSection from '../sections/HowItWorksSection';
 import KioskSection from '../sections/KioskSection';
 import PricingSection from '../pricing/PricingSection';
@@ -19,11 +20,12 @@ export default function HomePage() {
   return (
     <>
       <HeroSection />
-      <LegalNoteSection />
+      <DevicesSection />
       <ProblemSolutionSection />
       <FeaturesSection />
       <HowItWorksSection />
       <KioskSection />
+      <LegalNoteSection />
       <PricingSection />
       <FaqSection items={homeFaq} />
       <ContactSection />

@@ -21,7 +21,7 @@ export default function PricingSection({ as = 'h2' }: { as?: 'h1' | 'h2' }) {
       title="Einfache Tarife – alle Funktionen inklusive"
       subtitle="Der Tarif richtet sich nur nach der Größe Ihres Teams. Jeder Tarif enthält den vollen Funktionsumfang."
     >
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 2, mb: 5, flexWrap: 'wrap' }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 5, flexWrap: 'wrap' }}>
         <Typography id="tarif-zahlweise" component="span" sx={{ fontWeight: 600 }}>
           Zahlweise:
         </Typography>
@@ -30,14 +30,14 @@ export default function PricingSection({ as = 'h2' }: { as?: 'h1' | 'h2' }) {
 
       <TierCards state={state} headingLevel={sub} />
 
-      <Box sx={{ mt: 4, textAlign: 'center' }}>
+      <Box sx={{ mt: 4 }}>
         <Typography sx={{ fontWeight: 600, fontSize: '1.1rem' }}>{trialNote()}</Typography>
-        <Typography variant="body2" role="note" sx={{ mt: 2, maxWidth: 720, mx: 'auto', p: 1.5, borderRadius: 2, border: 1, borderColor: 'divider', bgcolor: 'background.paper' }}>
+        <Typography variant="body2" role="note" sx={{ mt: 2, maxWidth: 720, p: 1.5, borderRadius: '6px', border: 1, borderColor: 'divider', bgcolor: 'background.paper' }}>
           {PRICE_DISCLAIMER}
         </Typography>
       </Box>
 
-      <Box sx={{ mt: 5, p: { xs: 3, md: 4 }, borderRadius: 4, bgcolor: 'var(--mbt-tint)' }}>
+      <Box sx={{ mt: 5, p: { xs: 3, md: 4 }, borderRadius: '6px', bgcolor: 'var(--mbt-tint)' }}>
         <Typography variant="h6" component={sub} sx={{ mb: 2 }}>
           In allen Tarifen enthalten
         </Typography>

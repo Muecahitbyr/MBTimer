@@ -70,8 +70,8 @@ export default function ContactSection() {
   };
 
   return (
-    <Section id="kontakt" eyebrow="Kontakt" title={contact.title} subtitle={contact.text} tinted>
-      <Card sx={{ maxWidth: 760, mx: 'auto' }}>
+    <Section id="kontakt" eyebrow="Kontakt" title={contact.title} subtitle={contact.text}>
+      <Card sx={{ maxWidth: 820, borderColor: 'var(--mbt-line-strong)' }}>
         <CardContent component="form" noValidate onSubmit={onSubmit} sx={{ p: { xs: 3, md: 4 }, display: 'grid', gap: 2.5 }} aria-label="Kontaktformular">
           <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' }, gap: 2.5 }}>
             <TextField id="kontakt-name" label="Name" required value={form.name} onChange={(e) => set('name', e.target.value)} error={!!errors.name} helperText={errors.name} autoComplete="name" size="medium" />

@@ -14,8 +14,7 @@ export const siteConfig = {
 
 export const nav = [
   { label: 'Funktionen', href: '/#funktionen' },
-  { label: 'So funktioniert’s', href: '/#ablauf' },
-  { label: 'Kiosk-Tablet', href: '/#kiosk' },
+  { label: 'Geräte', href: '/#geraete' },
   { label: 'Preise', href: '/preise' },
   { label: 'FAQ', href: '/#faq' },
   { label: 'Kontakt', href: '/#kontakt' },
@@ -23,14 +22,19 @@ export const nav = [
 
 export const hero = {
   eyebrow: 'Arbeitszeiterfassung für Betriebe mit Mitarbeitern',
-  title: 'Arbeitszeit erfassen, ohne Zettel und Excel.',
+  title: 'Arbeitszeit.\nOhne Umwege.',
   text:
-    'MBTimer erfasst Arbeitszeiten, Urlaub und Abwesenheiten Ihres Teams – am Kiosk-Tablet, am PC oder am Handy. ' +
-    'Übersichtlich für die Mitarbeiter, nachvollziehbar für die Leitung. Ob Arztpraxis, Handwerk, Gastronomie, ' +
-    'Handel oder Büro: MBTimer passt zu jedem Betrieb mit Mitarbeitern.',
+    'Kommen und Gehen stempeln, Urlaub beantragen, Überstunden im Blick – am Handy, am Tablet am Eingang oder am PC. ' +
+    'Für Praxen, Handwerk, Handel, Gastronomie und Büros.',
   primaryCta: 'Demo ansehen',
-  secondaryCta: 'Kontakt aufnehmen',
-  points: ['Stempeln per PIN am Tablet', 'Urlaub & Krankmeldungen an einem Ort', 'Läuft im Browser – keine Installation'],
+  secondaryCta: 'Kostenlos testen',
+  /** Beispielzeile unter dem Hero (Demo-Werte). */
+  clock: [
+    { label: 'Kommen · Handy', value: '07:58' },
+    { label: 'Pause', value: '0:30' },
+    { label: 'Gehen · Tablet', value: '16:31' },
+    { label: 'Saldo · heute', value: '+0:03', accent: true },
+  ],
 };
 
 export const legalNote = {

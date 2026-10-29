@@ -1,26 +1,19 @@
 import type { ReactNode } from 'react';
 import Box from '@mui/material/Box';
+import { MONO } from '../../theme/theme';
 
+/** Schlichter Browserrahmen: Haarlinie, Adresszeile in Monospace, kein Schatten. */
 export function BrowserFrame({ children, label }: { children: ReactNode; label?: string }) {
   return (
-    <Box
-      sx={{
-        borderRadius: 3,
-        overflow: 'hidden',
-        border: 1,
-        borderColor: 'divider',
-        bgcolor: 'background.paper',
-        boxShadow: '0 24px 60px -24px rgba(16, 36, 66, 0.35)',
-      }}
-    >
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75, px: 1.5, py: 1, borderBottom: 1, borderColor: 'divider', bgcolor: 'var(--mbt-tint)' }}>
-        {['#E57373', '#FFB74D', '#81C784'].map((c) => (
-          <Box key={c} sx={{ width: 10, height: 10, borderRadius: '50%', bgcolor: c }} />
-        ))}
+    <Box sx={{ borderRadius: '8px', overflow: 'hidden', border: 1, borderColor: 'var(--mbt-line-strong)', bgcolor: 'background.paper' }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, px: 2, py: 1, borderBottom: 1, borderColor: 'var(--mbt-line-strong)' }}>
+        <Box sx={{ display: 'flex', gap: 0.75 }} aria-hidden="true">
+          {[0, 1, 2].map((i) => (
+            <Box key={i} sx={{ width: 9, height: 9, borderRadius: '50%', border: 1, borderColor: 'var(--mbt-line-strong)' }} />
+          ))}
+        </Box>
         {label && (
-          <Box sx={{ ml: 1.5, px: 1.5, py: 0.25, borderRadius: 1, fontSize: 12, color: 'text.secondary', bgcolor: 'background.paper', flex: 1, maxWidth: 280, overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
-            {label}
-          </Box>
+          <Box sx={{ fontFamily: MONO, fontSize: 11.5, color: 'text.secondary', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>{label}</Box>
         )}
       </Box>
       <Box sx={{ lineHeight: 0 }}>{children}</Box>
@@ -30,17 +23,8 @@ export function BrowserFrame({ children, label }: { children: ReactNode; label?:
 
 export function TabletFrame({ children }: { children: ReactNode }) {
   return (
-    <Box
-      sx={{
-        p: { xs: 1.25, sm: 2 },
-        borderRadius: { xs: 4, sm: 6 },
-        bgcolor: '#1F2329',
-        boxShadow: '0 30px 70px -30px rgba(16, 36, 66, 0.55), inset 0 0 0 2px #3B414A',
-        position: 'relative',
-      }}
-    >
-      <Box sx={{ position: 'absolute', top: '50%', left: { xs: 4, sm: 7 }, width: 5, height: 5, borderRadius: '50%', bgcolor: '#4B525C', transform: 'translateY(-50%)' }} />
-      <Box sx={{ borderRadius: { xs: 1.5, sm: 2 }, overflow: 'hidden', lineHeight: 0 }}>{children}</Box>
+    <Box sx={{ p: { xs: 1.25, sm: 1.75 }, borderRadius: { xs: '18px', sm: '26px' }, bgcolor: '#111111', position: 'relative' }}>
+      <Box sx={{ borderRadius: { xs: '8px', sm: '12px' }, overflow: 'hidden', lineHeight: 0 }}>{children}</Box>
     </Box>
   );
 }

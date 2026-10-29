@@ -132,7 +132,7 @@ src/
   site/          Webseite: layout/, sections/, pages/, pricing/ (Rechner, Tarifkarten), seo.ts
   demo/          Demo: data/ (Testdaten), store/ (Zustand), lib/ (Zeitrechnung, Feiertage, Rechte), pages/, components/
   components/    gemeinsam genutzt (Logo, Hell/Dunkel-Schalter, Skip-Link …)
-  theme/         MUI-Theme (hell/dunkel, Akzentfarbe „klinisches Blau“ #1D5FA8)
+  theme/         MUI-Theme, Designrichtung „Präzise“: Inter Tight + JetBrains Mono, Kobalt #2B4BD8, hell/dunkel
   Root.tsx       Provider für Browser und Prerendering
   main.tsx       Browser-Einstieg (Hydration bzw. Rendern)
   entry-server.tsx  Prerender-Einstieg
@@ -145,7 +145,7 @@ public/
 
 **Technik:**
 - Vite, React 19, TypeScript (strict), Material UI 9 und React Router 7
-- Schrift Inter, lokal über `@fontsource-variable/inter`
+- Schriften Inter Tight und JetBrains Mono, lokal über `@fontsource-variable/*`
 - Keine weiteren Laufzeitbibliotheken
 
 ## Qualität (Stand der Umsetzung)

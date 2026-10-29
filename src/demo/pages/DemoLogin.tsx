@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography';
 import TabletMacOutlined from '@mui/icons-material/TabletMacOutlined';
 import ArrowForward from '@mui/icons-material/ArrowForward';
 import { Logo } from '../../components/Logo';
+import { MONO } from '../../theme/theme';
 import DemoBanner from '../components/DemoBanner';
 import EmployeeAvatar from '../components/EmployeeAvatar';
 import { useDemo } from '../store/DemoStore';
@@ -33,7 +34,7 @@ export default function DemoLogin() {
           <Box component={RouterLink} to="/" aria-label="Zur MBTimer-Webseite" sx={{ display: 'inline-flex', textDecoration: 'none' }}>
             <Logo size={40} />
           </Box>
-          <Chip label="Demo-Zugang" color="warning" sx={{ display: 'flex', width: 'fit-content', mx: 'auto', mt: 2 }} />
+          <Chip label="DEMO-ZUGANG" variant="outlined" sx={{ display: 'flex', width: 'fit-content', mx: 'auto', mt: 2, fontFamily: MONO, fontSize: 12, letterSpacing: '0.06em', borderColor: 'var(--mbt-line-strong)' }} />
           <Typography variant="h3" component="h1" sx={{ mt: 2, fontSize: { xs: '1.9rem', md: '2.4rem' } }}>
             MBTimer ausprobieren
           </Typography>

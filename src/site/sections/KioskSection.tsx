@@ -2,20 +2,20 @@ import { Link as RouterLink } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import CheckCircleOutline from '@mui/icons-material/CheckCircleOutlined';
 import { kiosk } from '../../config/site';
+import { MONO } from '../../theme/theme';
 import Section from '../components/Section';
 import { TabletFrame } from '../components/DeviceFrames';
 import Screenshot from '../components/Screenshot';
 
-// Echte Screenshots der Demo (erzeugt mit npm run screenshots).
+// Echter Screenshot der Demo (erzeugt mit npm run screenshots).
 const kioskShot = '/screenshots/kiosk.webp';
 const kioskShotSmall = '/screenshots/kiosk-small.webp';
 
 export default function KioskSection() {
   return (
-    <Section id="kiosk" eyebrow="Kiosk-Tablet" title={kiosk.title} tinted>
-      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '7fr 5fr' }, gap: { xs: 5, md: 8 }, alignItems: 'center' }}>
+    <Section id="kiosk" eyebrow="Kiosk-Tablet" title={kiosk.title}>
+      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '7fr 5fr' }, gap: { xs: 5, md: 9 }, alignItems: 'center' }}>
         <TabletFrame>
           <Screenshot
             src={kioskShot}
@@ -27,11 +27,11 @@ export default function KioskSection() {
           />
         </TabletFrame>
         <Box>
-          <Typography sx={{ color: 'text.secondary', fontSize: '1.1rem' }}>{kiosk.text}</Typography>
-          <Box component="ul" sx={{ listStyle: 'none', p: 0, m: 0, mt: 3, display: 'grid', gap: 1.25 }}>
-            {kiosk.points.map((p) => (
-              <Box component="li" key={p} sx={{ display: 'flex', gap: 1.25, alignItems: 'center' }}>
-                <CheckCircleOutline sx={{ color: 'primary.main' }} aria-hidden="true" />
+          <Typography sx={{ color: 'text.secondary', fontSize: '1.1rem', lineHeight: 1.6 }}>{kiosk.text}</Typography>
+          <Box component="ul" sx={{ listStyle: 'none', p: 0, m: 0, mt: 4 }}>
+            {kiosk.points.map((p, i) => (
+              <Box component="li" key={p} sx={{ display: 'flex', gap: 2.5, py: 1.75, borderTop: 1, borderColor: 'divider' }}>
+                <Box sx={{ fontFamily: MONO, fontSize: 13, color: 'text.secondary', pt: '2px' }}>{String(i + 1).padStart(2, '0')}</Box>
                 {p}
               </Box>
             ))}

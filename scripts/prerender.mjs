@@ -35,8 +35,6 @@ async function optimizeHead(html) {
   );
 }
 
-const heroPreload =
-  '<link rel="preload" as="image" type="image/webp" href="/screenshots/dashboard.webp" imagesrcset="/screenshots/dashboard-small.webp 720w, /screenshots/dashboard.webp 1440w" imagesizes="(min-width: 900px) 50vw, 100vw" fetchpriority="high" />';
 
 for (const route of PRERENDER_ROUTES) {
   const meta = pageMeta[route];
@@ -47,7 +45,7 @@ for (const route of PRERENDER_ROUTES) {
   const earlyClicks = `<script>(function(){var q=null;document.addEventListener('click',function(e){if(window.__mbtReady)return;var t=e.target&&e.target.closest&&e.target.closest('button,[role="button"]');if(!t||t.closest('a[href]'))return;e.preventDefault();e.stopPropagation();q=t},true);window.__mbtTakeClick=function(){var t=q;q=null;return t}})()</script>`;
   let html = template
     .replace(/<title>[^<]*<\/title>/, `<title>${escapeHtml(fullTitle(meta.title))}</title>`)
-    .replace('</head>', `${guard}${earlyClicks}${route === '/' ? heroPreload : ''}</head>`)
+    .replace('</head>', `${guard}${earlyClicks}</head>`)
     .replace('<div id="root"></div>', `${colorSchemeScript}<div id="root" data-route="${route}">${body}</div>`);
   html = await optimizeHead(html);
   if (meta.description) {

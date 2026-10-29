@@ -3,10 +3,10 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import CheckCircleOutline from '@mui/icons-material/CheckCircleOutlined';
-import PlayArrowRounded from '@mui/icons-material/PlayArrowRounded';
 import { hero } from '../../config/site';
+import { MONO } from '../../theme/theme';
 import { BrowserFrame } from '../components/DeviceFrames';
+import { Eyebrow } from '../components/Section';
 import Screenshot from '../components/Screenshot';
 
 // Echte Screenshots der Demo (erzeugt mit npm run screenshots).
@@ -15,54 +15,55 @@ const dashboardSmall = '/screenshots/dashboard-small.webp';
 
 export default function HeroSection() {
   return (
-    <Box
-      component="section"
-      aria-labelledby="hero-titel"
-      sx={{
-        pt: { xs: 6, md: 10 },
-        pb: { xs: 7, md: 11 },
-        background: 'linear-gradient(180deg, var(--mbt-tint) 0%, transparent 100%)',
-      }}
-    >
-      <Container maxWidth="lg">
-        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '5fr 6fr' }, gap: { xs: 6, md: 8 }, alignItems: 'center' }}>
-          <Box>
-            <Typography variant="overline" component="p" sx={{ color: 'primary.main', fontWeight: 700, letterSpacing: '0.1em', lineHeight: 1.4 }}>
-              {hero.eyebrow}
-            </Typography>
-            <Typography id="hero-titel" variant="h1" sx={{ fontSize: { xs: '2.2rem', sm: '2.8rem', md: '3.3rem' }, lineHeight: 1.1, mt: 1.5 }}>
-              {hero.title}
-            </Typography>
-            <Typography sx={{ mt: 3, fontSize: { xs: '1.05rem', md: '1.2rem' }, color: 'text.secondary', maxWidth: 560 }}>
-              {hero.text}
-            </Typography>
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1.5, mt: 4 }}>
-              <Button component={RouterLink} to="/demo" variant="contained" size="large" startIcon={<PlayArrowRounded />}>
-                {hero.primaryCta}
-              </Button>
-              <Button component={RouterLink} to="/#kontakt" variant="outlined" size="large">
-                {hero.secondaryCta}
-              </Button>
-            </Box>
-            <Box component="ul" sx={{ listStyle: 'none', p: 0, m: 0, mt: 4, display: 'grid', gap: 1 }}>
-              {hero.points.map((p) => (
-                <Box component="li" key={p} sx={{ display: 'flex', alignItems: 'center', gap: 1, color: 'text.secondary' }}>
-                  <CheckCircleOutline fontSize="small" sx={{ color: 'primary.main' }} aria-hidden="true" />
-                  {p}
-                </Box>
-              ))}
+    <Box component="section" aria-labelledby="hero-titel">
+      <Container maxWidth="lg" sx={{ pt: { xs: 7, md: 12 }, pb: { xs: 8, md: 10 } }}>
+        <Eyebrow>{hero.eyebrow}</Eyebrow>
+        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: { xs: 4, md: 9 }, alignItems: 'flex-end' }}>
+          <Typography
+            id="hero-titel"
+            variant="h1"
+            sx={{ flex: '999 1 520px', fontSize: { xs: '3rem', sm: '4.5rem', md: '6.5rem' }, lineHeight: 0.95, whiteSpace: 'pre-line' }}
+          >
+            {hero.title}
+          </Typography>
+          <Box sx={{ flex: '1 1 300px', maxWidth: 400 }}>
+            <Typography sx={{ fontSize: { xs: '1.06rem', md: '1.19rem' }, lineHeight: 1.55, color: 'text.secondary' }}>{hero.text}</Typography>
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1.5, mt: 3.5 }}>
+              <Button component={RouterLink} to="/demo" variant="contained" size="large">{hero.primaryCta}</Button>
+              <Button component={RouterLink} to="/#kontakt" variant="outlined" size="large">{hero.secondaryCta}</Button>
             </Box>
           </Box>
-          <BrowserFrame label="MBTimer – Dashboard (Demo)">
+        </Box>
+
+        <Box
+          component="dl"
+          aria-label="Beispiel eines Arbeitstags"
+          sx={{ m: 0, mt: { xs: 7, md: 10 }, borderTop: 1.5, borderColor: 'var(--mbt-ink)', display: 'grid', gridTemplateColumns: { xs: 'repeat(2, minmax(0, 1fr))', md: 'repeat(4, minmax(0, 1fr))' } }}
+        >
+          {hero.clock.map((c) => (
+            <Box key={c.label} sx={{ pt: 3, pr: 3 }}>
+              <Box component="dt" sx={{ fontFamily: MONO, fontSize: 12, letterSpacing: '0.04em', textTransform: 'uppercase', color: 'text.secondary' }}>{c.label}</Box>
+              <Box component="dd" sx={{ m: 0, mt: 1, fontFamily: MONO, fontSize: { xs: 36, md: 56 }, letterSpacing: '-0.04em', lineHeight: 1.1, color: c.accent ? 'primary.main' : 'text.primary' }}>
+                {c.value}
+              </Box>
+            </Box>
+          ))}
+        </Box>
+
+        <Box component="figure" sx={{ m: 0, mt: { xs: 7, md: 10 } }}>
+          <BrowserFrame label="mbtimer.vercel.app/demo · Dashboard">
             <Screenshot
               src={dashboard}
               srcSmall={dashboardSmall}
               width={1440}
               height={900}
-              priority
+              sizes="(min-width: 1200px) 1150px, 100vw"
               alt="Dashboard der MBTimer-Demo: Begrüßung, Stempel-Status, Monatssaldo, offene Anträge und wer heute anwesend ist."
             />
           </BrowserFrame>
+          <Typography component="figcaption" variant="body2" sx={{ mt: 1.5, fontFamily: MONO, fontSize: 12, color: 'text.secondary' }}>
+            Echter Screenshot aus der Demo – alle Daten erfunden.
+          </Typography>
         </Box>
       </Container>
     </Box>

@@ -9,6 +9,7 @@ import { pricing, vatNote, type PricingTier } from '../../config/pricing';
 import { calculateEstimate, type NormalizedInput } from './calculate';
 import { ca } from './format';
 import { useRequestContact } from '../useRequestContact';
+import { MONO } from '../../theme/theme';
 import { visuallyHidden } from '../../components/visuallyHidden';
 
 function tierLimit(tier: PricingTier): string {
@@ -36,11 +37,11 @@ export default function TierCards({ state, headingLevel = 'h3' }: { state: Norma
                 width: '100%',
                 position: 'relative',
                 overflow: 'visible',
-                ...(highlighted && { borderColor: 'primary.main', borderWidth: 2, boxShadow: '0 20px 50px -28px rgba(29, 95, 168, 0.5)' }),
+                ...(highlighted && { borderColor: 'var(--mbt-ink)', borderWidth: 1.5 }),
               }}
             >
               {tier.badge && (
-                <Chip label={tier.badge} color="primary" size="small" sx={{ position: 'absolute', top: -12, left: '50%', transform: 'translateX(-50%)' }} />
+                <Chip label={tier.badge.toUpperCase()} size="small" sx={{ position: 'absolute', top: -12, left: 24, bgcolor: 'var(--mbt-ink)', color: 'background.default', fontFamily: MONO, fontSize: 11, letterSpacing: '0.06em' }} />
               )}
               <CardContent sx={{ p: 3, display: 'flex', flexDirection: 'column', flex: 1 }}>
                 <Typography id={`tarif-${tier.id}`} variant="h5" component={headingLevel}>
@@ -52,13 +53,13 @@ export default function TierCards({ state, headingLevel = 'h3' }: { state: Norma
                 <Box sx={{ my: 2.5, minHeight: 84 }}>
                   {isCustom ? (
                     <>
-                      <Typography sx={{ fontSize: '1.9rem', fontWeight: 750, lineHeight: 1.2 }}>auf Anfrage</Typography>
+                      <Typography sx={{ fontSize: '2.2rem', fontWeight: 600, letterSpacing: '-0.04em', lineHeight: 1.2 }}>auf Anfrage</Typography>
                       <Typography variant="body2" sx={{ color: 'text.secondary', mt: 0.5 }}>individuelle Kalkulation</Typography>
                     </>
                   ) : (
                     <>
                       <Typography sx={{ lineHeight: 1.2 }}>
-                        <Box component="span" sx={{ fontSize: '1.9rem', fontWeight: 750 }}>
+                        <Box component="span" sx={{ fontSize: '2.2rem', fontWeight: 600, letterSpacing: '-0.04em' }}>
                           {ca(state.billing === 'jahr' ? estimate.perYear : estimate.perMonth)}
                         </Box>
                         <Box component="span" sx={{ color: 'text.secondary' }}>
