@@ -18,6 +18,8 @@ const DEMO_SHOTS = [
   { name: 'zeiterfassung', persona: 'Als Mitarbeiterin anmelden', path: '/demo/zeiterfassung', viewport: { width: 1200, height: 750 }, scale: 1.2, prepare: showPreviousWeek },
   { name: 'urlaubskalender', persona: 'Als Urlaubsbeauftragte anmelden', path: '/demo/urlaubskalender', viewport: { width: 1200, height: 750 }, scale: 1.2 },
   { name: 'kiosk', path: '/demo/kiosk', viewport: { width: 1024, height: 712 }, scale: 1180 / 1024 },
+  // Echte Handy-Ansicht (für den Abschnitt „Handy · Tablet · PC“)
+  { name: 'handy', persona: 'Als Mitarbeiterin anmelden', path: '/demo/dashboard', viewport: { width: 390, height: 844 }, scale: 2, mobile: true },
 ];
 
 /** Aktuelle Woche zuklappen, Vorwoche aufklappen und ins Bild holen. */
@@ -65,7 +67,14 @@ async function demoShots(browser, base) {
   await mkdir(OUT, { recursive: true });
   const encoder = await browser.newPage();
   for (const shot of DEMO_SHOTS) {
-    const context = await browser.newContext({ viewport: shot.viewport, deviceScaleFactor: shot.scale, colorScheme: 'light', locale: 'de-DE' });
+    const context = await browser.newContext({
+      viewport: shot.viewport,
+      deviceScaleFactor: shot.scale,
+      isMobile: !!shot.mobile,
+      hasTouch: !!shot.mobile,
+      colorScheme: 'light',
+      locale: 'de-DE',
+    });
     await context.clock.setFixedTime(screenshotTime());
     const page = await context.newPage();
     await page.goto(`${base}/demo`);

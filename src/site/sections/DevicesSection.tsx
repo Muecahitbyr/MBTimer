@@ -3,91 +3,102 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { MONO } from '../../theme/theme';
 import Section from '../components/Section';
+import Screenshot from '../components/Screenshot';
 
-/** Gezeichnete Geräte (keine Bilder) – zeigen, dass MBTimer am Handy, Tablet und PC läuft. */
+// Echte Screenshots der Demo (erzeugt mit npm run screenshots).
+const SHOTS = {
+  handy: { src: '/screenshots/handy.webp', small: '/screenshots/handy-small.webp', width: 780, height: 1688 },
+  kiosk: { src: '/screenshots/kiosk.webp', small: '/screenshots/kiosk-small.webp', width: 1180, height: 820 },
+  desktop: { src: '/screenshots/dashboard.webp', small: '/screenshots/dashboard-small.webp', width: 1440, height: 900 },
+};
+
 function Stage({ children }: { children: ReactNode }) {
   return (
-    <Box aria-hidden="true" sx={{ height: 340, display: 'flex', alignItems: 'center', justifyContent: 'center', bgcolor: 'var(--mbt-tint)', borderRadius: '4px', overflow: 'hidden' }}>
+    <Box sx={{ height: { xs: 'auto', md: 520 }, py: { xs: 4, md: 0 }, px: 3, display: 'flex', alignItems: 'center', justifyContent: 'center', bgcolor: 'var(--mbt-tint)', borderRadius: '4px' }}>
       {children}
     </Box>
   );
 }
 
-const line = '1.5px solid var(--mbt-ink)';
-
-function Phone() {
+function PhoneFrame({ children }: { children: ReactNode }) {
   return (
-    <Stage>
-      <Box sx={{ width: 168, height: 312, border: line, borderRadius: '28px', p: '18px 14px', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', bgcolor: 'background.paper' }}>
-        <Box>
-          <Box sx={{ fontSize: 11, color: 'text.secondary' }}>Guten Morgen, Lea</Box>
-          <Box sx={{ mt: 1.25, fontFamily: MONO, fontSize: 34, letterSpacing: '-0.04em' }}>07:58</Box>
-          <Box sx={{ fontSize: 11, color: 'text.secondary' }}>Soll heute 8:00 h</Box>
-        </Box>
-        <Box sx={{ height: 44, borderRadius: 999, bgcolor: 'primary.main', color: 'primary.contrastText', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 600 }}>
-          Kommen stempeln
-        </Box>
-      </Box>
-    </Stage>
+    <Box sx={{ width: { xs: 200, md: 215 }, p: '7px', bgcolor: '#111111', borderRadius: '38px', boxSizing: 'border-box' }}>
+      <Box sx={{ borderRadius: '31px', overflow: 'hidden', lineHeight: 0 }}>{children}</Box>
+    </Box>
   );
 }
 
-function Tablet() {
-  const people = [
-    ['Lea', true],
-    ['Tim', true],
-    ['Aylin', false],
-    ['Marco', false],
-    ['Nina', true],
-    ['Sophie', false],
-  ] as const;
+function TabletFrame({ children }: { children: ReactNode }) {
   return (
-    <Stage>
-      <Box sx={{ width: 296, maxWidth: '86%', height: 206, border: line, borderRadius: '18px', p: 2, boxSizing: 'border-box', bgcolor: 'background.paper', display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 1 }}>
-        {people.map(([name, here]) => (
-          <Box key={name} sx={{ border: 1, borderColor: 'divider', borderRadius: '8px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 0.5, fontSize: 11 }}>
-            <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: here ? 'primary.main' : 'var(--mbt-line-strong)' }} />
-            {name}
-          </Box>
-        ))}
-      </Box>
-    </Stage>
+    <Box sx={{ width: '100%', maxWidth: 360, p: '10px', bgcolor: '#111111', borderRadius: '22px', boxSizing: 'border-box' }}>
+      <Box sx={{ borderRadius: '12px', overflow: 'hidden', lineHeight: 0 }}>{children}</Box>
+    </Box>
   );
 }
 
-function Laptop() {
-  const rows = [
-    ['Mo 19.10.', '07:20–16:03', '+0:13'],
-    ['Di 20.10.', '07:30–16:02', '+0:02'],
-    ['Mi 21.10.', 'Urlaub', '±0:00'],
-    ['Do 22.10.', '07:35–17:32', '+1:12'],
-  ];
+/** Laptop mit Bildschirmrahmen und Unterteil (ohne Markenlogo). */
+function LaptopFrame({ children }: { children: ReactNode }) {
   return (
-    <Stage>
-      <Box sx={{ width: 316, maxWidth: '86%' }}>
-        <Box sx={{ height: 196, border: line, borderRadius: '10px 10px 0 0', p: 1.75, boxSizing: 'border-box', bgcolor: 'background.paper', fontFamily: MONO, fontSize: 10.5 }}>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', py: 0.75, borderBottom: line, fontFamily: 'inherit', fontWeight: 600, fontSize: 12 }}>
-            <span>KW 43</span>
-            <span>40:08 / 40:00</span>
-          </Box>
-          {rows.map((r, i) => (
-            <Box key={r[0]} sx={{ display: 'flex', justifyContent: 'space-between', py: '7px', borderBottom: i < rows.length - 1 ? 1 : 0, borderColor: 'divider' }}>
-              <span>{r[0]}</span>
-              <span>{r[1]}</span>
-              <Box component="span" sx={{ color: i === 3 ? 'primary.main' : 'inherit' }}>{r[2]}</Box>
-            </Box>
-          ))}
-        </Box>
-        <Box sx={{ height: 14, border: line, borderTop: 0, borderRadius: '0 0 6px 6px', bgcolor: 'var(--mbt-tint)', mx: '-18px' }} />
+    <Box sx={{ width: '100%', maxWidth: 360 }}>
+      <Box sx={{ p: '9px 9px 12px', bgcolor: '#111111', borderRadius: '14px 14px 2px 2px' }}>
+        <Box sx={{ borderRadius: '3px', overflow: 'hidden', lineHeight: 0 }}>{children}</Box>
       </Box>
-    </Stage>
+      <Box sx={{ height: 12, mx: '-7%', bgcolor: '#CFCCC6', borderRadius: '0 0 14px 14px', display: 'flex', justifyContent: 'center' }}>
+        <Box sx={{ width: '16%', height: 5, bgcolor: '#B3B0A9', borderRadius: '0 0 6px 6px' }} />
+      </Box>
+    </Box>
   );
 }
 
 const devices = [
-  { nr: '01', label: 'Handy', title: 'Unterwegs', text: 'Stempeln und Urlaub beantragen – auch im Außendienst.', visual: <Phone /> },
-  { nr: '02', label: 'Tablet', title: 'Am Eingang', text: 'Die Stempeluhr: Name antippen, PIN eingeben, fertig.', visual: <Tablet /> },
-  { nr: '03', label: 'PC', title: 'Im Büro', text: 'Übersicht, Genehmigungen und Statistiken für die Leitung.', visual: <Laptop /> },
+  {
+    nr: '01',
+    label: 'Handy',
+    title: 'Unterwegs',
+    text: 'Stempeln und Urlaub beantragen – auch im Außendienst.',
+    visual: (
+      <PhoneFrame>
+        <Screenshot
+          {...SHOTS.handy}
+          srcSmall={SHOTS.handy.small}
+          sizes="215px"
+          alt="MBTimer-Demo auf dem Handy: Begrüßung, Button „Kommen stempeln“, Monatssaldo und Überstundenkonto."
+        />
+      </PhoneFrame>
+    ),
+  },
+  {
+    nr: '02',
+    label: 'Tablet',
+    title: 'Am Eingang',
+    text: 'Die Stempeluhr: Name antippen, PIN eingeben, fertig.',
+    visual: (
+      <TabletFrame>
+        <Screenshot
+          {...SHOTS.kiosk}
+          srcSmall={SHOTS.kiosk.small}
+          sizes="340px"
+          alt="Kiosk-Stempeluhr der MBTimer-Demo auf dem Tablet: Namenskacheln des Teams mit Anwesenheitsstatus."
+        />
+      </TabletFrame>
+    ),
+  },
+  {
+    nr: '03',
+    label: 'PC',
+    title: 'Im Büro',
+    text: 'Übersicht, Genehmigungen und Statistiken für die Leitung.',
+    visual: (
+      <LaptopFrame>
+        <Screenshot
+          {...SHOTS.desktop}
+          srcSmall={SHOTS.desktop.small}
+          sizes="340px"
+          alt="MBTimer-Demo am Laptop: Dashboard mit Stempel-Status, Saldo, offenen Anträgen und Team-Übersicht."
+        />
+      </LaptopFrame>
+    ),
+  },
 ];
 
 export default function DevicesSection() {
@@ -101,20 +112,21 @@ export default function DevicesSection() {
     >
       <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: 'repeat(3, minmax(0, 1fr))' }, gap: 4 }}>
         {devices.map((d) => (
-          <Box component="article" key={d.nr} aria-labelledby={`geraet-${d.nr}`} sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-            {d.visual}
-            <Box>
+          <Box component="figure" key={d.nr} sx={{ m: 0, display: 'flex', flexDirection: 'column', gap: 3 }}>
+            <Stage>{d.visual}</Stage>
+            <Box component="figcaption">
               <Box sx={{ fontFamily: MONO, fontSize: 12, letterSpacing: '0.04em', color: 'text.secondary' }}>
                 {d.nr} — {d.label.toUpperCase()}
               </Box>
-              <Typography id={`geraet-${d.nr}`} variant="h6" component="h3" sx={{ mt: 1, fontSize: '1.35rem', lineHeight: 1.2 }}>
+              <Typography component="h3" variant="h6" sx={{ mt: 1, fontSize: '1.35rem', lineHeight: 1.2 }}>
                 {d.title}
               </Typography>
-              <Typography sx={{ mt: 0.75, color: 'text.secondary', lineHeight: 1.6 }}>{d.text}</Typography>
+              <Typography sx={{ mt: 0.5, color: 'text.secondary', lineHeight: 1.6 }}>{d.text}</Typography>
             </Box>
           </Box>
         ))}
       </Box>
+      <Typography sx={{ mt: 3, fontFamily: MONO, fontSize: 12, color: 'text.secondary' }}>Echte Screenshots aus der Demo – alle Daten erfunden.</Typography>
     </Section>
   );
 }

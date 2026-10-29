@@ -5,13 +5,8 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import { hero } from '../../config/site';
 import { MONO } from '../../theme/theme';
-import { BrowserFrame } from '../components/DeviceFrames';
 import { Eyebrow } from '../components/Section';
-import Screenshot from '../components/Screenshot';
 
-// Echte Screenshots der Demo (erzeugt mit npm run screenshots).
-const dashboard = '/screenshots/dashboard.webp';
-const dashboardSmall = '/screenshots/dashboard-small.webp';
 
 export default function HeroSection() {
   return (
@@ -50,21 +45,6 @@ export default function HeroSection() {
           ))}
         </Box>
 
-        <Box component="figure" sx={{ m: 0, mt: { xs: 7, md: 10 } }}>
-          <BrowserFrame label="mbtimer.vercel.app/demo · Dashboard">
-            <Screenshot
-              src={dashboard}
-              srcSmall={dashboardSmall}
-              width={1440}
-              height={900}
-              sizes="(min-width: 1200px) 1150px, 100vw"
-              alt="Dashboard der MBTimer-Demo: Begrüßung, Stempel-Status, Monatssaldo, offene Anträge und wer heute anwesend ist."
-            />
-          </BrowserFrame>
-          <Typography component="figcaption" variant="body2" sx={{ mt: 1.5, fontFamily: MONO, fontSize: 12, color: 'text.secondary' }}>
-            Echter Screenshot aus der Demo – alle Daten erfunden.
-          </Typography>
-        </Box>
       </Container>
     </Box>
   );

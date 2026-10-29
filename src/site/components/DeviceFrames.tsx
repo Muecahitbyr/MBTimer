@@ -20,11 +20,3 @@ export function BrowserFrame({ children, label }: { children: ReactNode; label?:
     </Box>
   );
 }
-
-export function TabletFrame({ children }: { children: ReactNode }) {
-  return (
-    <Box sx={{ p: { xs: 1.25, sm: 1.75 }, borderRadius: { xs: '18px', sm: '26px' }, bgcolor: '#111111', position: 'relative' }}>
-      <Box sx={{ borderRadius: { xs: '8px', sm: '12px' }, overflow: 'hidden', lineHeight: 0 }}>{children}</Box>
-    </Box>
-  );
-}
