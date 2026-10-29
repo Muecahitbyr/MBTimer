@@ -20,10 +20,16 @@ function Stage({ children }: { children: ReactNode }) {
   );
 }
 
+/**
+ * Handy-Rahmen: Der Bildschirm hat oben und unten einen schmalen Rand, damit die runden Ecken
+ * den Screenshot nicht anschneiden.
+ */
 function PhoneFrame({ children }: { children: ReactNode }) {
   return (
-    <Box sx={{ width: { xs: 200, md: 215 }, p: '7px', bgcolor: '#111111', borderRadius: '38px', boxSizing: 'border-box' }}>
-      <Box sx={{ borderRadius: '31px', overflow: 'hidden', lineHeight: 0 }}>{children}</Box>
+    <Box sx={{ width: { xs: 210, md: 225 }, p: '7px', bgcolor: '#111111', borderRadius: '38px', boxSizing: 'border-box' }}>
+      <Box sx={{ borderRadius: '31px', overflow: 'hidden', bgcolor: '#FFFFFF', pt: '24px', pb: '24px' }}>
+        <Box sx={{ lineHeight: 0 }}>{children}</Box>
+      </Box>
     </Box>
   );
 }
@@ -61,7 +67,7 @@ const devices = [
         <Screenshot
           {...SHOTS.handy}
           srcSmall={SHOTS.handy.small}
-          sizes="215px"
+          sizes="225px"
           alt="MBTimer-Demo auf dem Handy: Begrüßung, Button „Kommen stempeln“, Monatssaldo und Überstundenkonto."
         />
       </PhoneFrame>
